@@ -1,5 +1,6 @@
 package com.sprint.nangpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -102,12 +103,14 @@ public class RecipeInfo {
     /**
      * 연관 관계 설정(주체X)
      */
+    @JsonIgnore
     @OneToMany(mappedBy = "recipeInfo")
     private List<RecipeCrse> recipeCrses;
 
     /**
      * 연관 관계 설정(주체X)
      */
+    @JsonIgnore
     @OneToMany(mappedBy = "recipeInfo")
     private List<RecipeIrdnt> recipeIrdnts;
 
