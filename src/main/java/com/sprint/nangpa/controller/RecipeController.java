@@ -16,6 +16,7 @@ public class RecipeController {
     private final RecipeService recipeService;
 
     /**
+     * 검색하는데 필요한 모든 재료 조회
      *
      * @return List<String> : 디비에 저장된 모든 재료 목록
      */
