@@ -1,11 +1,13 @@
 package com.sprint.nangpa.repository;
 
 import com.sprint.nangpa.model.RecipeIrdnt;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class RecipeIrdntClassRepository {
 
     private final EntityManager em;
