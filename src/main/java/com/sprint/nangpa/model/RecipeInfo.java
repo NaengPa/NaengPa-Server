@@ -101,6 +101,11 @@ public class RecipeInfo {
     private Long likeCnt;
 
     /**
+     * 레시피 URL
+     */
+    private String imgUrl;
+
+    /**
      * 연관 관계 설정(주체X)
      */
     @JsonIgnore

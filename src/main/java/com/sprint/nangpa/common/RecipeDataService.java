@@ -4,7 +4,7 @@ import com.sprint.nangpa.model.RecipeCrse;
 import com.sprint.nangpa.model.RecipeInfo;
 import com.sprint.nangpa.model.RecipeIrdnt;
 import com.sprint.nangpa.repository.RecipCrseRepository;
-import com.sprint.nangpa.repository.RecipIrdntRepository;
+import com.sprint.nangpa.repository.RecipeIrdntRepository;
 import com.sprint.nangpa.repository.RecipeInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
@@ -53,7 +53,7 @@ public class RecipeDataService {
     /**
      * 레시피 과정정보 데이터 관리 Repository
      */
-    private final RecipIrdntRepository recipIrdntRepository;
+    private final RecipeIrdntRepository recipIrdntRepository;
 
     /**
      * 레시피 기본정보 데이터 DB 저장
