@@ -26,7 +26,7 @@ public class RecipeIrdntClassRepository {
 
     /**디비에 있는 모든 재료를 중복없이 가져온다*/
     public List<String> getAllNoOverlapIrdnt(){
-        List<RecipeIrdnt> irdntList = em.createQuery("select distinct r from RecipeIrdnt r", RecipeIrdnt.class)
+        List<RecipeIrdnt> irdntList = em.createQuery("select distinct r.irdntNm from RecipeIrdnt r", RecipeIrdnt.class)
                 .getResultList();
 
         List<String> NameList = new ArrayList<>();

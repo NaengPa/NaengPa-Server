@@ -15,6 +15,10 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
+    /**
+     *
+     * @return List<String> : 디비에 저장된 모든 재료 목록
+     */
     @GetMapping("/getIrdnt")
     public List<String> getIrdnt(){
         return recipeService.getAllNoOverlapIrdnt();
