@@ -4,11 +4,7 @@ import com.sprint.nangpa.model.RecipeIrdnt;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Repository
 public class RecipeIrdntClassRepository {
@@ -28,7 +24,7 @@ public class RecipeIrdntClassRepository {
     }
 
     /**디비에 있는 모든 재료를 중복없이 가져온다*/
-    public List<String> getAllNoOverlapIrdnt(){
+    public ArrayList<Map> getAllNoOverlapIrdnt(){
         List<RecipeIrdnt> irdntList = em.createQuery("select r from RecipeIrdnt r", RecipeIrdnt.class)
                 .getResultList();
 
@@ -38,7 +34,20 @@ public class RecipeIrdntClassRepository {
             nameList.add(irdnt.getIrdntNm());
         }
 
-        return new ArrayList<String>(nameList);
+
+        int index = 1;
+        ArrayList<Map> resultList = new ArrayList<>();
+
+        for(String irdntName : nameList)
+            HashMap<String, String> nameMap = new HashMap<>();
+            nameMap.put("id", Integer.toString(index++));
+            nameMap.put("title", irdntName);
+            resultList.add(nameMap);
+        }
+
+
+        return resultList;
     }
+
 
 }

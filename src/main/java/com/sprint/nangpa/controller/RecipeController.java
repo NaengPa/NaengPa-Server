@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/recipe")
@@ -26,7 +27,7 @@ public class RecipeController {
      * @return List<String> : 디비에 저장된 모든 재료 목록
      */
     @GetMapping("/getIrdnt")
-    public List<String> getIrdnt(){
+    public ArrayList<Map> getIrdnt(){
         return recipeService.getAllNoOverlapIrdnt();
     }
 

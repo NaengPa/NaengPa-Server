@@ -20,15 +20,4 @@ public class RecipeServiceTest {
     RecipeIrdntClassRepository recipeIrdntClassRepository;
     @Autowired RecipeService recipeService;
 
-    @Test
-    public void 재료이름중복없이가져와() throws Exception {
-        //given
-        List<String> allNoOverlapIrdnt = recipeIrdntClassRepository.getAllNoOverlapIrdnt();
-
-        //when
-
-        //then
-
-    }
-
 }

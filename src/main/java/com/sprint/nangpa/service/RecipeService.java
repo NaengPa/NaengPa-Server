@@ -37,7 +37,7 @@ public class RecipeService {
      */
     private final RecipeIrdntRepository recipeIrdntRepository;
 
-    public List<String> getAllNoOverlapIrdnt(){
+    public ArrayList<Map> getAllNoOverlapIrdnt(){
         return this.recipeIrdntClassRepository.getAllNoOverlapIrdnt();
     }
 
@@ -47,7 +47,7 @@ public class RecipeService {
      * @param   irdntNms         : 검색 재료 목록
      * @return  List<RecipeInfo> : 재료가 포함된 레시피 목록
      */
-    public List<RecipeInfo> findByInIrdntNm(List<String> irdntNms){
+    public List<RecipeInfo> findByInIrdntNm(List<java.lang.String> irdntNms){
         List<RecipeIrdnt> findRecipeIrdnt = null;
 
         if(irdntNms.size() > 0){
