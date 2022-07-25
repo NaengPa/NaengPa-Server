@@ -1,5 +1,7 @@
 package com.sprint.nangpa.repository;
 
+import com.sprint.nangpa.model.RecipeCrse;
+import com.sprint.nangpa.model.RecipeInfo;
 import com.sprint.nangpa.model.RecipeIrdnt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +19,7 @@ public interface RecipeIrdntRepository extends JpaRepository<RecipeIrdnt, Long> 
     // 재료 목록으로 레시피 목록 검색
     @Query(nativeQuery = true, value = "SELECT * FROM recipe_irdnt as r WHERE r.irdnt_nm IN (:irdntNms)")
     List<RecipeIrdnt> findByInIrdntNms(@Param ("irdntNms") List<String> irdntNms);
+
+    // 레시피 아이디로 레시피 과정정보 조회
+    List<RecipeIrdnt> findByRecipeInfo(RecipeInfo recipeInfo);
 }

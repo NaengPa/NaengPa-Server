@@ -3,6 +3,7 @@ package com.sprint.nangpa.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * 레시피 재료정보
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "RECIPE_IRDNT")
 @ToString
-public class RecipeIrdnt {
+public class RecipeIrdnt implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
