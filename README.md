@@ -43,6 +43,8 @@ https://user-images.githubusercontent.com/50781066/180764659-b5d83b62-3715-4b39-
 
 ## :monocle_face: 프로젝트 주요 기능
 
+- 냉장고 재료를 리스트업 해서 사용자가 선택한 재료로 레시피 검색하는 기능
+
 <br>
 
 ## :calendar: 프로젝트 기간
