@@ -38,7 +38,7 @@ public class RecipeIrdntClassRepository {
         int index = 1;
         ArrayList<Map> resultList = new ArrayList<>();
 
-        for(String irdntName : nameList)
+        for(String irdntName : nameList){
             HashMap<String, String> nameMap = new HashMap<>();
             nameMap.put("id", Integer.toString(index++));
             nameMap.put("title", irdntName);

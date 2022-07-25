@@ -17,6 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("*")
                 .allowedMethods(
                         HttpMethod.GET.name(),
+                        HttpMethod.HEAD.name(),
                         HttpMethod.PATCH.name(),
                         HttpMethod.PUT.name(),
                         HttpMethod.POST.name(),
