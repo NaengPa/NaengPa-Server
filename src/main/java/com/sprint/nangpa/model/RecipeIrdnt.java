@@ -22,7 +22,7 @@ public class RecipeIrdnt {
     /**
      * 레시피 코드
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipeId")
     private RecipeInfo recipeInfo;
 

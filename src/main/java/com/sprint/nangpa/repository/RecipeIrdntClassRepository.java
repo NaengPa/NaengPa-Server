@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class RecipeIrdntClassRepository {
@@ -26,16 +27,19 @@ public class RecipeIrdntClassRepository {
 
     /**디비에 있는 모든 재료를 중복없이 가져온다*/
     public List<String> getAllNoOverlapIrdnt(){
-        List<RecipeIrdnt> irdntList = em.createQuery("select distinct r.irdntNm from RecipeIrdnt r", RecipeIrdnt.class)
+        List<RecipeIrdnt> irdntList = em.createQuery("select r from RecipeIrdnt r", RecipeIrdnt.class)
                 .getResultList();
 
-        List<String> NameList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
 
         for(RecipeIrdnt irdnt : irdntList ){
-            NameList.add(irdnt.getIrdntNm());
+            nameList.add(irdnt.getIrdntNm());
         }
 
-        return NameList;
+        //nameList의 중복 제거하고 새로운 리스트에 저장
+        List<String> NoOverLapNameList = nameList.stream().distinct().collect(Collectors.toList());
+
+        return NoOverLapNameList;
     }
 
 }
