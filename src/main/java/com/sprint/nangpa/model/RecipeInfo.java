@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "RECIPE_INFO")
 @ToString
-public class RecipeInfo implements Serializable {
+public class RecipeInfo {
 
     /**
      * 레시피 코드

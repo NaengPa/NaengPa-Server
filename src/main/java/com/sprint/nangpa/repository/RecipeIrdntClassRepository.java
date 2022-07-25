@@ -5,7 +5,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,16 +32,13 @@ public class RecipeIrdntClassRepository {
         List<RecipeIrdnt> irdntList = em.createQuery("select r from RecipeIrdnt r", RecipeIrdnt.class)
                 .getResultList();
 
-        List<String> nameList = new ArrayList<>();
+        Set<String> nameList = new HashSet<>();
 
         for(RecipeIrdnt irdnt : irdntList ){
             nameList.add(irdnt.getIrdntNm());
         }
 
-        //nameList의 중복 제거하고 새로운 리스트에 저장
-        List<String> NoOverLapNameList = nameList.stream().distinct().collect(Collectors.toList());
-
-        return NoOverLapNameList;
+        return new ArrayList<String>(nameList);
     }
 
 }

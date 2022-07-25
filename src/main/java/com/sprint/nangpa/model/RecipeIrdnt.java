@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "RECIPE_IRDNT")
 @ToString
-public class RecipeIrdnt implements Serializable {
+public class RecipeIrdnt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class RecipeIrdnt implements Serializable {
     /**
      * 레시피 코드
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "recipeId")
     private RecipeInfo recipeInfo;
 

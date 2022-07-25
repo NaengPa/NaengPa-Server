@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "RECIPE_CRSE")
 @ToString
-public class RecipeCrse implements Serializable {
+public class RecipeCrse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
