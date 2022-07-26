@@ -10,11 +10,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 레시피 관리 Controller
+ */
 @RestController
 @RequestMapping(value = "/recipe")
 @RequiredArgsConstructor
 public class RecipeController {
 
+    /**
+     * 레시피 관리 Service
+     */
     private final RecipeService recipeService;
 
     /**

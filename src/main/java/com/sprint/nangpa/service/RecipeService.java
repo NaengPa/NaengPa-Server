@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+/**
+ * 레시피 관리 Service
+ */
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 @RequiredArgsConstructor
