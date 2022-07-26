@@ -1,18 +1,14 @@
 package com.sprint.nangpa.controller;
 
-
+import com.sprint.nangpa.dto.IrdntNmDTO;
 import com.sprint.nangpa.dto.RecipeDetailDTO;
-import com.sprint.nangpa.dto.RecipeSerDTO;
 import com.sprint.nangpa.model.RecipeInfo;
+import com.sprint.nangpa.dto.RecipeSerDTO;
 import com.sprint.nangpa.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/recipe")
@@ -24,11 +20,11 @@ public class RecipeController {
     /**
      * 검색하는데 필요한 모든 재료 조회
      *
-     * @return List<String> : 디비에 저장된 모든 재료 목록
+     * @return List<String> : 디비에 저장된 모든 재료 목록(중복 제거)
      */
     @GetMapping("/getIrdnt")
-    public ArrayList<Map> getIrdnt(){
-        return recipeService.getAllNoOverlapIrdnt();
+    public List<IrdntNmDTO> getIrdnt(){
+        return recipeService.getIrdntNmList();
     }
 
     /**
@@ -39,7 +35,7 @@ public class RecipeController {
      */
     @PostMapping("/getRecipeList")
     public List<RecipeInfo> getRecipeList(@RequestBody RecipeSerDTO dto){
-        return recipeService.findByInIrdntNm(dto.getIrdntNms());
+        return recipeService.getRecipeList(dto.getIrdntNms());
     }
 
     /**

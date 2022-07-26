@@ -27,10 +27,10 @@ public class RecipeDetailDTO implements Serializable {
     /**
      * 레시피 과정정보
      */
-    private List<RecipeCrseDTO> recipeCrses;
+    private List<RecipeCrse> recipeCrses;
 
     /**
      * 레시피 재료정보
      */
-    private List<RecipeIrdntDTO> recipeIrdnts;
+    private List<RecipeIrdnt> recipeIrdnts;
 }
