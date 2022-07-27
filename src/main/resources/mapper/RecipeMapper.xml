@@ -106,7 +106,7 @@
         ]]>
     </select>
 
-    <!-- 레시피 코드목록에 포함된 레시피 기본정보 조회 -->
+    <!-- 레시피 코드 목록에 포함된 레시피 기본정보 조회 -->
     <select id="selectRecipeListContainRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.CurRecipeDTO">
     <![CDATA[
         SELECT RECIPE_ID
@@ -121,7 +121,7 @@
             ]]>
             </when>
             <otherwise>
-                <foreach collection="recipeIds" item="recipeId" index="index" open="(" separator="," close=")">
+                <foreach collection="recipeIds" item="recipeId" index="index" separator=",">
                 <![CDATA[
                     #{recipeId}
                 ]]>
