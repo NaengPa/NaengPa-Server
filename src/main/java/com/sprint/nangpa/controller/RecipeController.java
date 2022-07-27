@@ -34,7 +34,7 @@ public class RecipeController {
     /**
      * 검색 재료가 포함된 음식 레시피 조회
      *
-     * @param   dto              : 재료 목록
+     * @param   irdntNms         : 재료 목록
      * @return  List<RecipeInfo> : 재료가 포함된 레시피 목록
      */
     @PostMapping("/getRecipeList")
@@ -59,7 +59,7 @@ public class RecipeController {
      * @param   recipeIds          : 조회할 레시피 코드 목록
      * @return  List<CurRecipeDTO> : 목록에 포함된 레시피 기본정보 목록
      */
-    @GetMapping("/getCurRecipeList")
+    @PostMapping("/getCurRecipeList")
     public List<CurRecipeDTO> getCurRecipeList(@RequestBody RecipeSerByRecipeIdDTO recipeIds) {
         return recipeService.getRecipeListByContainRecipeId(recipeIds.getRecipeIds());
     }
