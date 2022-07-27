@@ -1,9 +1,7 @@
 package com.sprint.nangpa.controller;
 
-import com.sprint.nangpa.dto.IrdntNmDTO;
-import com.sprint.nangpa.dto.RecipeDetailDTO;
+import com.sprint.nangpa.dto.*;
 import com.sprint.nangpa.model.RecipeInfo;
-import com.sprint.nangpa.dto.RecipeSerDTO;
 import com.sprint.nangpa.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -40,8 +38,8 @@ public class RecipeController {
      * @return  List<RecipeInfo> : 재료가 포함된 레시피 목록
      */
     @PostMapping("/getRecipeList")
-    public List<RecipeInfo> getRecipeList(@RequestBody RecipeSerDTO dto){
-        return recipeService.getRecipeList(dto.getIrdntNms());
+    public List<RecipeInfo> getRecipeList(@RequestBody RecipeSerByIrdntNmDTO irdntNms){
+        return recipeService.getRecipeListByContainIrdntNm(irdntNms.getIrdntNms());
     }
 
     /**
@@ -53,5 +51,16 @@ public class RecipeController {
     @GetMapping("/getRecipeDetail/{id}")
     public RecipeDetailDTO getRecipeDetail(@PathVariable(value = "id") String recipeId) {
         return recipeService.getRecipeDetail(recipeId);
+    }
+
+    /**
+     * 최근 조회한 레시피 기본정보 목록 조회
+     *
+     * @param   recipeIds          : 조회할 레시피 코드 목록
+     * @return  List<CurRecipeDTO> : 목록에 포함된 레시피 기본정보 목록
+     */
+    @GetMapping("/getCurRecipeList")
+    public List<CurRecipeDTO> getCurRecipeList(@RequestBody RecipeSerByRecipeIdDTO recipeIds) {
+        return recipeService.getRecipeListByContainRecipeId(recipeIds.getRecipeIds());
     }
 }

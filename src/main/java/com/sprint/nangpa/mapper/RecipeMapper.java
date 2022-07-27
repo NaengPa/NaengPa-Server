@@ -1,5 +1,6 @@
 package com.sprint.nangpa.mapper;
 
+import com.sprint.nangpa.dto.CurRecipeDTO;
 import com.sprint.nangpa.dto.IrdntNmDTO;
 import com.sprint.nangpa.model.RecipeCrse;
 import com.sprint.nangpa.model.RecipeInfo;
@@ -19,4 +20,7 @@ public interface RecipeMapper {
     List<RecipeCrse> selectRecipeCrseByRecipeId(String recipeId);
 
     List<RecipeIrdnt> selectRecipeIrdntByRecipeId(String recipeId);
+
+    List<CurRecipeDTO> selectRecipeListContainRecipeId(List<Long> recipeIds);
+
 }

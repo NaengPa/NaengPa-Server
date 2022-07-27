@@ -13,7 +13,7 @@
     </select>
 
     <!-- 재료 목록에 속한 레시피 목록 조회 -->
-    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.RecipeSerDTO" resultType="com.sprint.nangpa.model.RecipeInfo">
+    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.model.RecipeInfo">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , RECIPE_NM_KO         -- 레시피 이름(한글)
@@ -100,5 +100,33 @@
           FROM RECIPE_IRDNT
          WHERE RECIPE_ID = #{recipeId}
         ]]>
+    </select>
+
+    <!-- 레시피 코드목록에 포함된 레시피 기본정보 조회 -->
+    <select id="selectRecipeListContainRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.CurRecipeDTO">
+    <![CDATA[
+        SELECT RECIPE_ID
+             , IMG_URL
+#           FROM RECIPE_INFO
+        FROM recipe_info
+         WHERE RECIPE_ID IN (
+    ]]>
+        <choose>
+            <when test="recipeIds.isEmpty()">
+            <![CDATA[
+                ''
+            ]]>
+            </when>
+            <otherwise>
+                <foreach collection="recipeIds" item="recipeId" index="index" open="(" separator="," close=")">
+                <![CDATA[
+                    #{recipeId}
+                ]]>
+                </foreach>
+            </otherwise>
+        </choose>
+    <![CDATA[
+        )
+    ]]>
     </select>
 </mapper>

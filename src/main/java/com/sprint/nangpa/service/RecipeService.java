@@ -1,5 +1,6 @@
 package com.sprint.nangpa.service;
 
+import com.sprint.nangpa.dto.CurRecipeDTO;
 import com.sprint.nangpa.dto.IrdntNmDTO;
 import com.sprint.nangpa.dto.RecipeDetailDTO;
 import com.sprint.nangpa.mapper.RecipeMapper;
@@ -40,7 +41,7 @@ public class RecipeService {
      * @param   irdntNms         : 검색 재료 목록
      * @return  List<RecipeInfo> : 재료가 포함된 레시피 목록
      */
-    public List<RecipeInfo> getRecipeList(List<String> irdntNms){
+    public List<RecipeInfo> getRecipeListByContainIrdntNm(List<String> irdntNms){
         return recipeMapper.selectRecipeListContainIrdntNm(irdntNms);
     }
 
@@ -66,5 +67,15 @@ public class RecipeService {
         recipeDetailDTO.setRecipeIrdnts(findRecipeIrdnts);
 
         return recipeDetailDTO;
+    }
+
+    /**
+     * 레시피 아이디 목록에 포함된 레시피 기본정보 조회
+     *
+     * @param   recipeIds          : 레시피 아이디 목록
+     * @return  List<CurRecipeDTO> : 목록에 포함된 레시피 기본정보
+     */
+    public List<CurRecipeDTO> getRecipeListByContainRecipeId(List<Long> recipeIds) {
+        return recipeMapper.selectRecipeListContainRecipeId(recipeIds);
     }
 }

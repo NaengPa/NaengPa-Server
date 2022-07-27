@@ -8,17 +8,17 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * 레시피 목록 조회 요청 DTO
- * 재료 목록을 List로 바인딩
+ * 최근 조회한 레시피 목록 조회 요청 DTO
+ * 래시피 코드 목록을 List로 바인딩
  */
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class RecipeSerDTO {
+public class RecipeSerByRecipeIdDTO {
 
     /**
-     * 재료 목록
+     * 레시피 코드
      */
-    private List<String> irdntNms;
+    private List<Long> recipeIds;
 }
