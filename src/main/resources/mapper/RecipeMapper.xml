@@ -46,6 +46,9 @@
                              </if>
     <![CDATA[
                             )
+        ORDER BY
+            LIKE_CNT
+          , RECIPE_NM_KO
     ]]>
     </select>
 
