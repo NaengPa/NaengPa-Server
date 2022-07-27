@@ -107,8 +107,7 @@
     <![CDATA[
         SELECT RECIPE_ID
              , IMG_URL
-#           FROM RECIPE_INFO
-        FROM recipe_info
+          FROM RECIPE_INFO
          WHERE RECIPE_ID IN (
     ]]>
         <choose>
