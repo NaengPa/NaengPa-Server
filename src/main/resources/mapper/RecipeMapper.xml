@@ -5,9 +5,13 @@
     <!-- 재료명, row 번호 조회(재료명 중복 제거) -->
     <select id="selectDistinctRecipeIrdntList" resultType="com.sprint.nangpa.dto.IrdntNmDTO">
     <![CDATA[
-        SELECT DISTINCT (IRDNT.IRDNT_NM)                -- 재료명
-             , @rowNum:=@rowNum+1           AS ID       -- 행 번호
-          FROM RECIPE_IRDNT IRDNT
+        WITH CTE AS (
+            SELECT DISTINCT (IRDNT_NM)
+              FROM RECIPE_IRDNT
+        )
+        select DISTINCT (IRDNT_NM)                  -- 재료명
+             , @rowNum:=@rowNum+1           AS ID   -- 행 번호
+          FROM CTE
              , (SELECT @rownum:=0) TMP
     ]]>
     </select>
