@@ -17,7 +17,7 @@
     </select>
 
     <!-- 재료 목록에 속한 레시피 목록 조회 -->
-    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.model.RecipeInfo">
+    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.dto.RecipeListInfoDTO">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , RECIPE_NM_KO         -- 레시피 이름(한글)
@@ -34,7 +34,30 @@
              , PC_NM                -- 가격별 분류
              , LIKE_CNT             -- 좋아요 수
              , IMG_URL              -- 음식 사진 url
-          FROM RECIPE_INFO
+             , (SELECT COUNT (DISTINCT (IRDNT_NM))
+                  FROM RECIPE_IRDNT B
+                 WHERE A.RECIPE_ID = B.RECIPE_ID
+                   AND IRDNT_NM IN (
+    ]]>
+                            <choose>
+                                <when test="irdntNms.isEmpty()">
+                                <![CDATA[
+                                    ''
+                                ]]>
+                                </when>
+                                <otherwise>
+                                    <foreach collection="irdntNms" item="irdntNm" index="index" separator=",">
+                                    <![CDATA[
+                                        #{irdntNm}
+                                    ]]>
+                                    </foreach>
+                                </otherwise>
+                            </choose>
+    <![CDATA[
+                                   )
+               )
+               AS CONTAIN_CNT
+          FROM RECIPE_INFO A
          WHERE RECIPE_ID IN (   SELECT DISTINCT(RECIPE_ID)
                                   FROM RECIPE_IRDNT
     ]]>
@@ -103,7 +126,7 @@
              , IRDNT_TYPE_NM        -- 재료타입명
           FROM RECIPE_IRDNT
          WHERE RECIPE_ID = #{recipeId}
-        ]]>
+    ]]>
     </select>
 
     <!-- 레시피 코드 목록에 포함된 레시피 기본정보 조회 -->
