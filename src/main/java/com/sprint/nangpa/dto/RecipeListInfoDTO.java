@@ -1,12 +1,20 @@
 package com.sprint.nangpa.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
  * 레시피 목록 정보
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class RecipeListInfoDTO implements Serializable {
-
 
     /**
      * 레시피 코드
