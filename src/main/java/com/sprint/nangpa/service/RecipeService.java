@@ -1,13 +1,9 @@
 package com.sprint.nangpa.service;
 
-import com.sprint.nangpa.dto.CurRecipeDTO;
-import com.sprint.nangpa.dto.IrdntNmDTO;
-import com.sprint.nangpa.dto.RecipeDetailDTO;
-import com.sprint.nangpa.dto.RecipeListInfoDTO;
+import com.sprint.nangpa.dto.*;
 import com.sprint.nangpa.mapper.RecipeMapper;
 import com.sprint.nangpa.model.RecipeCrse;
 import com.sprint.nangpa.model.RecipeInfo;
-import com.sprint.nangpa.model.RecipeIrdnt;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,8 +60,8 @@ public class RecipeService {
         recipeDetailDTO.setRecipeCrses(findRecipeCrses);
 
         // 레시피 재료정보 세팅
-        List<RecipeIrdnt> findRecipeIrdnts = recipeMapper.selectRecipeIrdntByRecipeId(recipeId);
-        recipeDetailDTO.setRecipeIrdnts(findRecipeIrdnts);
+        List<IrdntInfoDTO> findRecipeIrdnts = recipeMapper.selectRecipeIrdntByRecipeId(recipeId);
+        recipeDetailDTO.setIrdntInfos(findRecipeIrdnts);
 
         return recipeDetailDTO;
     }

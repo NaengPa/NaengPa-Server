@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sprint.nangpa.mapper.RecipeMapper">
 
-    <!-- 재료명, row 번호 조회(재료명 중복 제거) -->
+    <!-- 재료명, row 번호 조회(중복 재료명 제거) -->
     <select id="selectDistinctRecipeIrdntList" resultType="com.sprint.nangpa.dto.IrdntNmDTO">
     <![CDATA[
         WITH CTE AS (
@@ -115,17 +115,19 @@
     ]]>
     </select>
 
-    <!-- 레시피 코드를 통한 레시피 재료정보 조회 -->
-    <select id="selectRecipeIrdntByRecipeId" parameterType="String" resultType="com.sprint.nangpa.model.RecipeIrdnt">
+    <!-- 레시피 코드를 통한 레시피 재료정보 조회(중복 재료명 제거) -->
+    <select id="selectRecipeIrdntByRecipeId" parameterType="String" resultType="com.sprint.nangpa.dto.IrdntInfoDTO">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
-             , IRDNT_SN             -- 재료순번
+             , IRDNT_SN             --  재료순번
              , IRDNT_NM             -- 재료명
-             , IRDNT_CPCTY          -- 재료용량
-             , IRDNT_TYPE_CD        -- 재료타입 코드
-             , IRDNT_TYPE_NM        -- 재료타입명
           FROM RECIPE_IRDNT
          WHERE RECIPE_ID = #{recipeId}
+        GROUP BY
+            RECIPE_ID
+          , IRDNT_NM
+        ORDER BY
+            IRDNT_SN
     ]]>
     </select>
 

@@ -31,17 +31,16 @@ public class LoggingAspect {
         // 메서드 조회
         Method method = getMethod(joinPoint);
         log.info("REQUEST : {");
-        log.info("  CLASS             => {}", joinPoint.getTarget().getClass());
-        log.info("  METHOD            => {}", method.getName());
+        log.info("  CLASS                   => {}", joinPoint.getTarget().getClass());
+        log.info("  METHOD                  => {}", method.getName());
 
         Object[] args = joinPoint.getArgs();
         // 파라미터 출력
         if(args.length <= 0){
-            log.info("  PARAMETER         => null");
+            log.info("  PARAMETER               => null");
         }else {
             for (Object arg : args) {
-                log.info("  PARAMETER TYPE    => {}", arg.getClass().getSimpleName());
-                log.info("  PARAMETER VALUE   => {}", arg);
+                log.info("  PARAMETER TYPE/VALUE    => {}/{}", arg.getClass().getSimpleName(), arg);
             }
         }
         log.info("}");
@@ -55,10 +54,9 @@ public class LoggingAspect {
         log.info("RESPONSE : {");
 
         if(returnObj == null){
-            log.info("  RETURN VALUE      => null");
+            log.info("  RETURN                  => null");
         }else{
-            log.info("  RETURN TYPE       => {}", returnObj.getClass().getSimpleName());
-            log.info("  RETURN VALUE      => {}", returnObj);
+            log.info("  RETURN TYPE/VALUE       => {}/{}", returnObj.getClass().getSimpleName(), returnObj);
         }
         log.info("}");
     }

@@ -19,7 +19,7 @@ public class RecipeCrse implements Serializable {
     /**
      * 레시피 코드
      */
-    private String recipeId;
+    private long recipeId;
 
     /**
      * 요리설명순서
