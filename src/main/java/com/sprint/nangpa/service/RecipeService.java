@@ -61,7 +61,7 @@ public class RecipeService {
 
         // 레시피 재료정보 세팅
         List<IrdntInfoDTO> findRecipeIrdnts = recipeMapper.selectRecipeIrdntByRecipeId(recipeId);
-        recipeDetailDTO.setIrdntInfos(findRecipeIrdnts);
+        recipeDetailDTO.setRecipeIrdnts(findRecipeIrdnts);
 
         return recipeDetailDTO;
     }
