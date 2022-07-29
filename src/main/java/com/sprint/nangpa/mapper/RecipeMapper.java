@@ -16,11 +16,11 @@ public interface RecipeMapper {
 
     List<RecipeListInfoDTO> selectRecipeListContainIrdntNm(List<String> irdntNms);
 
-    RecipeInfo selectRecipeInfoByRecipeId(String recipeId);
+    RecipeInfo selectRecipeInfoByRecipeId(long recipeId);
 
-    List<RecipeCrse> selectRecipeCrseByRecipeId(String recipeId);
+    List<RecipeCrse> selectRecipeCrseByRecipeId(long recipeId);
 
-    List<IrdntInfoDTO> selectRecipeIrdntByRecipeId(String recipeId);
+    List<IrdntInfoDTO> selectRecipeIrdntByRecipeId(long recipeId);
 
     List<CurRecipeDTO> selectRecipeListContainRecipeId(List<Long> recipeIds);
 }

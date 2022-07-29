@@ -48,7 +48,7 @@ public class RecipeController {
      * @return  RecipeDetailDTO : 레시피 정보
      */
     @GetMapping("/getRecipeDetail/{id}")
-    public RecipeDetailDTO getRecipeDetail(@PathVariable(value = "id") String recipeId) {
+    public RecipeDetailDTO getRecipeDetail(@PathVariable(value = "id") long recipeId) {
         return recipeService.getRecipeDetail(recipeId);
     }
 

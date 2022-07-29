@@ -48,7 +48,7 @@ public class RecipeService {
      * @param   recipeId        : 레시피 아이디
      * @return  RecipeDetailDTO : 레시피(기본정보, 과정정보, 재료정보)
      */
-    public RecipeDetailDTO getRecipeDetail(String recipeId) {
+    public RecipeDetailDTO getRecipeDetail(long recipeId) {
         RecipeDetailDTO recipeDetailDTO = new RecipeDetailDTO();
 
         // 레시피 기본정보 세팅
