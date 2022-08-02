@@ -80,7 +80,7 @@
     </select>
 
     <!-- 레시피 코드를 통한 레시피 기본정보 조회 -->
-    <select id="selectRecipeInfoByRecipeId" parameterType="String" resultType="com.sprint.nangpa.model.RecipeInfo">
+    <select id="selectRecipeInfoByRecipeId" parameterType="Long" resultType="com.sprint.nangpa.model.RecipeInfo">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , RECIPE_NM_KO         -- 레시피 이름(한글)
@@ -103,7 +103,7 @@
     </select>
 
     <!-- 레시피 코드를 통한 레시피 과정정보 조회 -->
-    <select id="selectRecipeCrseByRecipeId" parameterType="String" resultType="com.sprint.nangpa.model.RecipeCrse">
+    <select id="selectRecipeCrseByRecipeId" parameterType="Long" resultType="com.sprint.nangpa.model.RecipeCrse">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , COOKING_NO           -- 요리설명순서
@@ -116,7 +116,7 @@
     </select>
 
     <!-- 레시피 코드를 통한 레시피 재료정보 조회(중복 재료명 제거) -->
-    <select id="selectRecipeIrdntByRecipeId" parameterType="String" resultType="com.sprint.nangpa.dto.IrdntInfoDTO">
+    <select id="selectRecipeIrdntByRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.IrdntInfoDTO">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , IRDNT_SN             --  재료순번

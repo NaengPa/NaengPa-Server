@@ -7,6 +7,7 @@ import com.sprint.nangpa.dto.RecipeListInfoDTO;
 import com.sprint.nangpa.model.RecipeCrse;
 import com.sprint.nangpa.model.RecipeInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface RecipeMapper {
     List<IrdntNmDTO> selectDistinctRecipeIrdntList();
 
-    List<RecipeListInfoDTO> selectRecipeListContainIrdntNm(List<String> irdntNms);
+    List<RecipeListInfoDTO> selectRecipeListContainIrdntNm(@Param("irdntNms") List<String> irdntNms);
 
     RecipeInfo selectRecipeInfoByRecipeId(long recipeId);
 
@@ -22,5 +23,5 @@ public interface RecipeMapper {
 
     List<IrdntInfoDTO> selectRecipeIrdntByRecipeId(long recipeId);
 
-    List<CurRecipeDTO> selectRecipeListContainRecipeId(List<Long> recipeIds);
+    List<CurRecipeDTO> selectRecipeListContainRecipeId(@Param("recipeIds") List<Long> recipeIds);
 }

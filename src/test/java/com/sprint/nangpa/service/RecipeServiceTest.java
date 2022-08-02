@@ -1,13 +1,17 @@
 package com.sprint.nangpa.service;
 
+import com.sprint.nangpa.dto.CurRecipeDTO;
 import com.sprint.nangpa.dto.IrdntNmDTO;
 import com.sprint.nangpa.dto.RecipeDetailDTO;
 import com.sprint.nangpa.dto.RecipeListInfoDTO;
+import com.sprint.nangpa.mapper.RecipeMapper;
+import com.sprint.nangpa.model.RecipeInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -20,6 +24,9 @@ public class RecipeServiceTest {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    private RecipeMapper recipeMapper;
 
     /**
      * 재료명 목록 조회
@@ -65,7 +72,17 @@ public class RecipeServiceTest {
      * 최근 레시피 기본정보 조회
      */
     @Test
-    public void given_when_then()  {
+    public void givenRecipeIdArray_whenGetRecipeListByContainRecipeId_thenCurrentRecipeInfoListSuccess()  {
+        Long[] recipeIds = {1L, 11L, 49L};
+        List<Long> recipeIdList = new ArrayList<>();
+        Collections.addAll(recipeIdList, recipeIds);
 
+        List<CurRecipeDTO> findData = recipeService.getRecipeListByContainRecipeId(recipeIdList);
+
+        for(int i=0; i<3; i++) {
+            RecipeInfo recipeInfo = recipeMapper.selectRecipeInfoByRecipeId(recipeIds[i]);
+
+            assertThat(findData.get(i).getRecipeId()).isEqualTo(recipeInfo.getRecipeId());
+        }
     }
 }
