@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sprint.nangpa.mapper.UserMapper">
+
+    <!-- 사용자 정보 저장 -->
+    <insert id="insertUserInfo" parameterType="com.sprint.nangpa.model.User">
+    <![CDATA[
+        INSERT
+          INTO USER
+             ( EMAIL
+             , NICKNAME
+             , PASSWORD
+             , IMG_URL
+             )
+        VALUES
+             ( #{email}
+             , #{nickname}
+             , #{password}
+             , #{imgUrl}
+             )
+    ]]>
+    </insert>
+
+    <!-- 사용자 정보 조회 -->
+    <select id="selectUserInfo" parameterType="String" resultType="com.sprint.nangpa.model.User">
+    <![CDATA[
+        SELECT EMAIL
+             , NICKNAME
+             , IMG_URL
+          FROM USER
+         WHERE EMAIL = #{email}
+    ]]>
+    </select>
+
+    <!-- 사용자 정보 수정 -->
+    <update id="updateUserInfo" parameterType="com.sprint.nangpa.model.User">
+    <![CDATA[
+        UPDATE USER
+           SET EMAIL    = #{eamil}
+             , NICKNAME = #{nickname}
+             , PASSWORD = #{password}
+             , IMG_URL  = #{imgUrl}
+         WHERE EMAIL    = #{email}
+    ]]>
+    </update>
+
+</mapper>
