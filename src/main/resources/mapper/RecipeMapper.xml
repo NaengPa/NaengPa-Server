@@ -3,13 +3,13 @@
 <mapper namespace="com.sprint.nangpa.mapper.RecipeMapper">
 
     <!-- 재료명, row 번호 조회(중복 재료명 제거) -->
-    <select id="selectDistinctRecipeIrdntList" resultType="com.sprint.nangpa.dto.IrdntNmDTO">
+    <select id="selectDistinctRecipeIrdntList" resultType="com.sprint.nangpa.dto.recipe.IrdntNmDTO">
     <![CDATA[
         WITH CTE AS (
-            SELECT DISTINCT (IRDNT_NM)
+            SELECT DISTINCT (IRDNT_NM) AS IRDNT_NM
               FROM RECIPE_IRDNT
         )
-        select DISTINCT (IRDNT_NM)                  -- 재료명
+        select IRDNT_NM                             -- 재료명
              , @rowNum:=@rowNum+1           AS ID   -- 행 번호
           FROM CTE
              , (SELECT @rownum:=0) TMP
@@ -17,7 +17,7 @@
     </select>
 
     <!-- 재료 목록에 속한 레시피 목록 조회 -->
-    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.dto.RecipeListInfoDTO">
+    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.recipe.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.dto.recipe.RecipeListInfoDTO">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , RECIPE_NM_KO         -- 레시피 이름(한글)
@@ -116,7 +116,7 @@
     </select>
 
     <!-- 레시피 코드를 통한 레시피 재료정보 조회(중복 재료명 제거) -->
-    <select id="selectRecipeIrdntByRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.IrdntInfoDTO">
+    <select id="selectRecipeIrdntByRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.recipe.IrdntInfoDTO">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , IRDNT_SN             --  재료순번
@@ -132,7 +132,7 @@
     </select>
 
     <!-- 레시피 코드 목록에 포함된 레시피 기본정보 조회 -->
-    <select id="selectRecipeListContainRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.CurRecipeDTO">
+    <select id="selectRecipeListContainRecipeId" parameterType="Long" resultType="com.sprint.nangpa.dto.recipe.CurRecipeDTO">
     <![CDATA[
         SELECT RECIPE_ID
              , IMG_URL

@@ -1,6 +1,6 @@
 package com.sprint.nangpa.controller;
 
-import com.sprint.nangpa.dto.*;
+import com.sprint.nangpa.dto.recipe.*;
 import com.sprint.nangpa.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

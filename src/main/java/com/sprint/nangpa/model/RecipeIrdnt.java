@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * 레시피 재료정보 DTO
+ * 레시피 재료정보 Model
  */
 @Getter
 @Setter
