@@ -1,4 +1,4 @@
-package com.sprint.nangpa.dto;
+package com.sprint.nangpa.dto.recipe;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

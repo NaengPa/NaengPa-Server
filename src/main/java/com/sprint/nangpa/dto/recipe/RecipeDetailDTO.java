@@ -1,4 +1,4 @@
-package com.sprint.nangpa.dto;
+package com.sprint.nangpa.dto.recipe;
 
 import com.sprint.nangpa.model.RecipeCrse;
 import com.sprint.nangpa.model.RecipeInfo;
