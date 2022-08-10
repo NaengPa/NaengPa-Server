@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sprint.nangpa.mapper.TokenMapper">
+
+    <!-- Refresh Token 저장 -->
+    <insert id="saveRefreshToken" parameterType="com.sprint.nangpa.dto.token.RefreshTokenDTO">
+    <![CDATA[
+        INSERT
+          INTO REFRESH_TOKEN
+             ( EMAIL
+             , REFRESH_TOKEN
+             )
+        VALUES
+             ( #{email}
+             , #{refreshToken}
+             )
+    ]]>
+    </insert>
+
+    <!-- Refresh Token 조회 -->
+    <select id="selectRefreshToken" parameterType="String" resultType="com.sprint.nangpa.dto.token.RefreshTokenDTO">
+    <![CDATA[
+        SELECT EMAIL
+             , REFRESH_TOKEN
+          FROM REFRESH_TOKEN
+         WHERE EMAIL = #{email}
+    ]]>
+    </select>
+
+    <!-- Refresh Token 수정 -->
+    <update id="updateRefreshToken" parameterType="com.sprint.nangpa.dto.token.RefreshTokenDTO">
+    <![CDATA[
+        UPDATE REFRESH_TOKEN
+           SET REFRESH_TOKEN = #{refreshToken}
+         WHERE EMAIL = #{email}
+    ]]>
+    </update>
+
+    <!-- Refresh Token 삭제 -->
+    <delete id="deleteRefreshToken" parameterType="String">
+    <![CDATA[
+        DELETE
+          FROM REFRESH_TOKEN
+         WHERE EMAIL = #{email}
+    ]]>
+    </delete>
+
+</mapper>

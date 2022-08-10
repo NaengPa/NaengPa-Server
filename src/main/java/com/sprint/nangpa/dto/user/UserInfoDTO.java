@@ -1,10 +1,19 @@
 package com.sprint.nangpa.dto.user;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 
 /**
  * 사용자 정보 조회 DTO
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class UserInfoDTO implements Serializable {
 
     /**
