@@ -21,9 +21,11 @@ public class KakaoController {
     private final KakaoService ks;
 
     @GetMapping("/kakao")
-    public HashMap getCI(@RequestParam String code) throws IOException{
+    public HashMap getToken(@RequestParam String code) throws IOException{
         System.out.println("code = " + code);
         HashMap<String, String> access_token = ks.getToken(code);
         return access_token;
     }
+
+
 }
