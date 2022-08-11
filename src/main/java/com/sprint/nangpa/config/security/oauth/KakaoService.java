@@ -108,11 +108,14 @@ public class KakaoService {
 
             String id = obj.get("id").toString();
             String nickname = properties.get("nickname").toString();
-            String age_range = kakao_account.get("age_range").toString();
+
+            String profile_image = properties.get("profile_image").toString();
+            String thumbnail_image = properties.get("thumbnail_image").toString();
 
             result.put("id", id);
             result.put("nickname", nickname);
-            result.put("age_range", age_range);
+            result.put("profile_image", profile_image);
+            result.put("thumbnail_image", thumbnail_image);
 
             br.close();
 
