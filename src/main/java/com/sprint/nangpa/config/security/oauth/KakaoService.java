@@ -20,12 +20,12 @@ public class KakaoService {
     @Value("${kakao_rest_api_key}")
     String clientId;
 
-    public String getToken(String code) throws IOException {
+    public HashMap<String, String> getToken(String code) throws IOException {
         // 인가코드로 토큰받기
         String host = "https://kauth.kakao.com/oauth/token";
         URL url = new URL(host);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        String token = "";
+        HashMap<String, String> token = new HashMap<>();
         try {
             urlConnection.setRequestMethod("POST");
             urlConnection.setDoOutput(true); // 데이터 기록 알려주기
@@ -60,7 +60,7 @@ public class KakaoService {
             System.out.println("refresh_token = " + refresh_token);
             System.out.println("access_token = " + access_token);
 
-            token = access_token;
+            token.put("access_token", access_token);
 
             br.close();
             bw.close();
