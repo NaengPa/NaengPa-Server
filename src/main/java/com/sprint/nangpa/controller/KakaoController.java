@@ -39,7 +39,7 @@ public class KakaoController {
      */
     @PostMapping("/kakao/user")
     public Map getUserInfo(@RequestBody AccessTokenDTO accessTokenDTO) throws IOException{
-        return ks.getUserInfo(accessTokenDTO.getAccess_token());
+        return ks.getKaKaoUserInfo(accessTokenDTO.getAccess_token());
     }
 }
 

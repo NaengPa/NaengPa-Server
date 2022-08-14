@@ -96,7 +96,7 @@ public class KakaoService {
     }
 
 
-    public Map<String, Object> getUserInfo(String access_token) throws IOException {
+    public Map<String, Object> getKaKaoUserInfo(String access_token) throws IOException {
         String host = "https://kapi.kakao.com/v2/user/me";
         Map<String, Object> result = new HashMap<>(); //key, value json 형식으로 데이터 내보내기 위해 hashMap 사용
         BufferedReader br = null;
