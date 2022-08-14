@@ -185,6 +185,12 @@ public class KakaoService {
         return result;
     }
 
+    public Map<String, Object> KakaoLogin(String code) throws IOException{
+        HashMap<String, String> tokenData = this.getKakaoToken(code);
+        Map<String, Object> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));
+        return userInfo;
+    }
+
 
     //유저정보 저장 : 카카오 서버에서 토큰을 가지고 유저 정보를 요청하고 가져온 유저 정보(아이디로) 우리 디비를 조회
     // 조회 했을때 유저가 있으면 -> 아무것도 안함, 유저가 없으면 -> 디비에 저장
