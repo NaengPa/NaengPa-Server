@@ -20,15 +20,13 @@ public class KakaoController {
 
     /**
      * 카카오 서버에서 엑세스 토큰 발급
-     *
      * @param code          : 인가 코드
      * @return access_token : 엑세스 토큰
      * @throws IOException
      */
     @GetMapping("/kakao")
     public HashMap getToken(@RequestParam String code) throws IOException{
-        System.out.println("code = " + code);
-        HashMap<String, String> access_token = ks.getToken(code);
+        HashMap<String, String> access_token = ks.getKakaoToken(code);
         return access_token;
     }
 
@@ -40,7 +38,8 @@ public class KakaoController {
      * @throws IOException
      */
     @PostMapping("/kakao/user")
-    public Map getUserInfo(@RequestBody AccessTokenDTO accessTokenDTO)  throws IOException{
+    public Map getUserInfo(@RequestBody AccessTokenDTO accessTokenDTO) throws IOException{
         return ks.getUserInfo(accessTokenDTO.getAccess_token());
     }
 }
+

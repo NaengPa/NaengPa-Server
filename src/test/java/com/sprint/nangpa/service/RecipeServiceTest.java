@@ -1,9 +1,9 @@
 package com.sprint.nangpa.service;
 
-import com.sprint.nangpa.dto.CurRecipeDTO;
-import com.sprint.nangpa.dto.IrdntNmDTO;
-import com.sprint.nangpa.dto.RecipeDetailDTO;
-import com.sprint.nangpa.dto.RecipeListInfoDTO;
+import com.sprint.nangpa.dto.recipe.CurRecipeDTO;
+import com.sprint.nangpa.dto.recipe.IrdntNmDTO;
+import com.sprint.nangpa.dto.recipe.RecipeDetailDTO;
+import com.sprint.nangpa.dto.recipe.RecipeListInfoDTO;
 import com.sprint.nangpa.mapper.RecipeMapper;
 import com.sprint.nangpa.model.RecipeInfo;
 import org.junit.jupiter.api.Test;
