@@ -54,7 +54,7 @@ public class KakaoService {
             int responseCode = urlConnection.getResponseCode();
             System.out.println("responseCode = " + responseCode);
 
-             br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = "";
             StringBuilder result = new StringBuilder();
             while ((line = br.readLine()) != null) {
@@ -99,6 +99,7 @@ public class KakaoService {
     public Map<String, Object> getUserInfo(String access_token) throws IOException {
         String host = "https://kapi.kakao.com/v2/user/me";
         Map<String, Object> result = new HashMap<>(); //key, value json 형식으로 데이터 내보내기 위해 hashMap 사용
+        BufferedReader br = null;
         try {
             URL url = new URL(host);
 
@@ -110,7 +111,7 @@ public class KakaoService {
             System.out.println("responseCode = " + responseCode);
 
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String line = "";
             String res = "";
             while((line=br.readLine())!=null)
@@ -135,13 +136,19 @@ public class KakaoService {
             result.put("nickname", nickname);
             result.put("profile_image", profile_image);
 
-            br.close();
 
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (br!=null){
+                    br.close();
+                }
+            }catch (IOException ie){
+                ie.printStackTrace();
+            }
         }
-
         return result;
     }
 
