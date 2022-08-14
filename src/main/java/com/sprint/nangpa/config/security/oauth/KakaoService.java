@@ -79,10 +79,18 @@ public class KakaoService {
             e.printStackTrace();
         }finally {
             //열어놨던 입출력 객체들 다시 닫아줌
-            br.close();
-            bw.close();
+            //close() 에서 에러가 일어날수도 있으므로 try-catch 한번 더 사용
+            try {
+                if(br!= null){
+                    br.close();
+                }
+                if(bw!=null){
+                    bw.close();
+                }
+            }catch (IOException ie){
+                ie.printStackTrace();
+            }
         }
-
 
         return token;
     }
