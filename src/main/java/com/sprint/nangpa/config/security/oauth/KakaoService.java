@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,75 +29,56 @@ public class KakaoService {
         String host = "https://kauth.kakao.com/oauth/token";
         URL url = new URL(host);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("POST");
+        urlConnection.setDoOutput(true); // 데이터 기록 알려주기
+
         HashMap<String, String> token = new HashMap<>();
 
-        BufferedWriter bw = null;
         String sb = "grant_type=authorization_code" +
                 "&client_id=" + clientId +
                 "&redirect_uri=" + redirect_uri +
                 "&code=" + code;
 
-        BufferedReader br = null;
+        int responseCode = urlConnection.getResponseCode();
+        System.out.println("responseCode = " + responseCode);
 
-        try {
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setDoOutput(true); // 데이터 기록 알려주기
-
-
-            bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()));
-
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()))) {
             bw.write(sb);
             bw.flush();
 
-            int responseCode = urlConnection.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
+                String line;
+                StringBuilder result = new StringBuilder();
+                while ((line = br.readLine()) != null) {
+                    result.append(line);
+                }
+                System.out.println("result = " + result);
 
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line = "";
-            StringBuilder result = new StringBuilder();
-            while ((line = br.readLine()) != null) {
-                result.append(line);
+                // json parsing
+                JSONParser parser = new JSONParser();
+                JSONObject elem = (JSONObject) parser.parse(result.toString());
+
+                String access_token = elem.get("access_token").toString();
+                String refresh_token = elem.get("refresh_token").toString();
+                System.out.println("refresh_token = " + refresh_token);
+                System.out.println("access_token = " + access_token);
+                token.put("access_token", access_token);
+            } catch (IOException | ParseException e) {
+                e.printStackTrace();
             }
-            System.out.println("result = " + result);
-
-            // json parsing
-            JSONParser parser = new JSONParser();
-            JSONObject elem = (JSONObject) parser.parse(result.toString());
-
-            String access_token = elem.get("access_token").toString();
-            String refresh_token = elem.get("refresh_token").toString();
-            System.out.println("refresh_token = " + refresh_token);
-            System.out.println("access_token = " + access_token);
-
-            token.put("access_token", access_token);
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }finally {
-            //열어놨던 입출력 객체들 다시 닫아줌
-            //close() 에서 에러가 일어날수도 있으므로 try-catch 한번 더 사용
-            try {
-                if(br!= null){
-                    br.close();
-                }
-                if(bw!=null){
-                    bw.close();
-                }
-            }catch (IOException ie){
-                ie.printStackTrace();
-            }
         }
 
         return token;
     }
 
 
-    public Map<String, Object> getKaKaoUserInfo(String access_token) throws IOException {
+    public Map<String, Object> getKaKaoUserInfo(String access_token) {
         String host = "https://kapi.kakao.com/v2/user/me";
         Map<String, Object> result = new HashMap<>(); //key, value json 형식으로 데이터 내보내기 위해 hashMap 사용
-        BufferedReader br = null;
+
         try {
             URL url = new URL(host);
 
@@ -110,22 +89,25 @@ public class KakaoService {
             int responseCode = urlConnection.getResponseCode();
             System.out.println("responseCode = " + responseCode);
 
+            JSONObject obj;
+            JSONObject properties;
 
-            br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line = "";
-            String res = "";
-            while((line=br.readLine())!=null)
-            {
-                res+=line;
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))){
+                String line;
+                StringBuilder res = new StringBuilder();
+                while((line=br.readLine())!=null)
+                {
+                    res.append(line);
+                }
+
+                System.out.println("res = " + res);
+
+                JSONParser parser = new JSONParser();
+                obj = (JSONObject) parser.parse(res.toString());
+                JSONObject kakao_account = (JSONObject) obj.get("kakao_account");
+
+                properties = (JSONObject) obj.get("properties");
             }
-
-            System.out.println("res = " + res);
-
-
-            JSONParser parser = new JSONParser();
-            JSONObject obj = (JSONObject) parser.parse(res);
-            JSONObject kakao_account = (JSONObject) obj.get("kakao_account");
-            JSONObject properties = (JSONObject) obj.get("properties");
 
 
             String id = obj.get("id").toString();
@@ -140,55 +122,40 @@ public class KakaoService {
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
-        }finally {
-            try {
-                if (br!=null){
-                    br.close();
-                }
-            }catch (IOException ie){
-                ie.printStackTrace();
-            }
         }
+
         return result;
     }
 
-    public String getAgreementInfo(String access_token)
-    {
-        String result = "";
+    public String getAgreementInfo(String access_token) throws IOException {
+        StringBuilder result = new StringBuilder();
         String host = "https://kapi.kakao.com/v2/user/scopes";
-        try{
-            URL url = new URL(host);
-            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.setRequestProperty("Authorization", "Bearer "+access_token);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-            String line = "";
+        URL url = new URL(host);
+        HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Bearer "+access_token);
+
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
+            String line;
             while((line=br.readLine())!=null)
             {
-                result+=line;
+                result.append(line);
             }
 
             int responseCode = urlConnection.getResponseCode();
             System.out.println("responseCode = " + responseCode);
 
-            // result is json format
-            br.close();
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return result;
+
+        return result.toString();
     }
 
-    public Map<String, Object> KakaoLogin(String code) throws IOException{
+    public Map<String, Object> kakaoLogin(String code) throws IOException{
         HashMap<String, String> tokenData = this.getKakaoToken(code);
-        Map<String, Object> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));
-        return userInfo;
+        return this.getKaKaoUserInfo(tokenData.get("access_token"));
     }
 
 
