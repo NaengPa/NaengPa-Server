@@ -27,7 +27,7 @@ public class KakaoController {
      */
     @GetMapping("/kakao")
     public Map getToken(@RequestParam String code) throws IOException{
-        return ks.KakaoLogin(code);
+        return ks.kakaoLogin(code);
     }
 }
 
