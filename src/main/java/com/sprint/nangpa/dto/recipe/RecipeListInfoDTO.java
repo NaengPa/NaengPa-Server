@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 레시피 목록 정보
@@ -95,4 +96,9 @@ public class RecipeListInfoDTO implements Serializable {
      * 검색 재료목록이 포함된 수
      */
     private long containCnt;
+
+    /**
+     * 재료 목록
+     */
+    private List<IrdntInfoDTO> irdnts;
 }
