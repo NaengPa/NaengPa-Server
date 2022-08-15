@@ -35,17 +35,30 @@ public class RecipeService {
     /**
      * 검색 재료가 포함된 음식 레시피 조회
      *
-     * @param   irdntNms                : 검색 재료 목록
-     * @return  List<RecipeListInfoDTO> : 재료가 포함된 레시피 목록
+     * @param   irdntNms      : 검색 재료 목록
+     * @return  RecipeListDTO : 재료가 포함된 레시피 목록
      */
-    public List<RecipeListInfoDTO> getRecipeListByContainIrdntNm(List<String> irdntNms){
-        List<RecipeListInfoDTO> recipeListInfoDTOS = recipeMapper.selectRecipeListContainIrdntNm(irdntNms);
+    public RecipeListDTO getRecipeListByContainIrdntNm(List<String> irdntNms){
+        RecipeListDTO res = new RecipeListDTO();
 
-        for (RecipeListInfoDTO recipeListInfoDTO : recipeListInfoDTOS) {
-            recipeListInfoDTO.setIrdnts(recipeMapper.selectRecipeIrdntByRecipeId(recipeListInfoDTO.getRecipeId()));
+        // 필터 정보 조회
+        FilterInfoDTO filterInfo = new FilterInfoDTO();
+        filterInfo.setLevel_nm(recipeMapper.selectLevelNm());
+        filterInfo.setNations_nm(recipeMapper.selectNationNm());
+
+        res.setFilterInfo(filterInfo);
+
+        // 레시피 목록 조회
+        List<RecipeInfoDTO> recipeInfos = recipeMapper.selectRecipeListContainIrdntNm(irdntNms);
+
+        // 레시피 별 재료 목록 조회
+        for (RecipeInfoDTO recipeInfo : recipeInfos) {
+            recipeInfo.setIrdnts(recipeMapper.selectRecipeIrdntByRecipeId(recipeInfo.getRecipeId()));
         }
 
-        return recipeListInfoDTOS;
+        res.setRecipeInfos(recipeInfos);
+
+        return res;
     }
 
     /**

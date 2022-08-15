@@ -24,7 +24,7 @@ public interface RecipeMapper {
      * @param  irdntNms                : 선택한 재료 목록
      * @return List<RecipeListInfoDTO> : 레시피 목록
      */
-    List<RecipeListInfoDTO> selectRecipeListContainIrdntNm(@Param("irdntNms") List<String> irdntNms);
+    List<RecipeInfoDTO> selectRecipeListContainIrdntNm(@Param("irdntNms") List<String> irdntNms);
 
     /**
      * 레시피 정보 조회
@@ -57,4 +57,19 @@ public interface RecipeMapper {
      * @return List<CurRecipeDTO> : 레시피 목록
     */
     List<CurRecipeDTO> selectRecipeListContainRecipeId(@Param("recipeIds") List<Long> recipeIds);
+
+    /**
+     * 음식 종류 조회
+     *
+     * @return List<String> : 음식 종류 목록
+     */
+    List<String> selectNationNm();
+
+    /**
+     * 음식 난이도 조회
+     *
+     * @return List<String> : 요리 난이도 목록
+     */
+    List<String> selectLevelNm();
+
 }

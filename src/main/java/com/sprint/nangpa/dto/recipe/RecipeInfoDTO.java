@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-public class RecipeListInfoDTO implements Serializable {
+public class RecipeInfoDTO implements Serializable {
 
     /**
      * 레시피 코드

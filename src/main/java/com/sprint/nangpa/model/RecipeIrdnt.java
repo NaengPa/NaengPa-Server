@@ -45,4 +45,9 @@ public class RecipeIrdnt implements Serializable {
      * 재료타입명
      */
     private String irdntTypeNm;
+
+    /**
+     * 검색 재료목록이 포함된 수
+     */
+    private long containCnt;
 }
