@@ -39,12 +39,12 @@ public class KakaoService {
                 "&redirect_uri=" + redirect_uri +
                 "&code=" + code;
 
-        int responseCode = urlConnection.getResponseCode();
-        System.out.println("responseCode = " + responseCode);
-
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()))) {
             bw.write(sb);
             bw.flush();
+
+            int responseCode = urlConnection.getResponseCode();
+            System.out.println("responseCode = " + responseCode);
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
                 String line;
