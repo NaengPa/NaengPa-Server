@@ -1,8 +1,12 @@
 package com.sprint.nangpa.config.security.oauth;
 
+import com.sprint.nangpa.dto.user.UserInfoDTO;
+import com.sprint.nangpa.mapper.UserMapper;
+import com.sprint.nangpa.model.User;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +19,20 @@ import java.util.Map;
 @Service
 public class KakaoService {
 
-    public KakaoService(@Value("${kakao_rest_api_key}") String clientId, @Value("${redirect_uri}") String redirect_uri) {
-        this.clientId = clientId;
-        this.redirect_uri = redirect_uri;
-    }
+    @Autowired
+    private final UserMapper userMapper;
 
     final String clientId;
 
     final String redirect_uri;
+
+
+    public KakaoService(UserMapper userMapper, @Value("${kakao_rest_api_key}") String clientId, @Value("${redirect_uri}") String redirect_uri) {
+        this.userMapper = userMapper;
+        this.clientId = clientId;
+        this.redirect_uri = redirect_uri;
+    }
+
 
     public HashMap<String, String> getKakaoToken(String code) throws IOException {
         // 인가코드로 토큰받기
@@ -153,8 +163,10 @@ public class KakaoService {
         return result.toString();
     }
 
-    public Map<String, Object> kakaoLogin(String code) throws IOException{
+
+    public Map<String, Object> KakaoLogin(String code) throws IOException{
         HashMap<String, String> tokenData = this.getKakaoToken(code);
+        System.out.println("hi");
         return this.getKaKaoUserInfo(tokenData.get("access_token"));
     }
 
@@ -162,7 +174,12 @@ public class KakaoService {
     //유저정보 저장 : 카카오 서버에서 토큰을 가지고 유저 정보를 요청하고 가져온 유저 정보(아이디로) 우리 디비를 조회
     // 조회 했을때 유저가 있으면 -> 아무것도 안함, 유저가 없으면 -> 디비에 저장
     //유저정보 받아오기 : User : { nickname :  string, id : num, imgurl : string, email : string}
-//    public String saveUser() {
-//
-//    }
+    public void saveUser(UserInfoDTO userInfo) {
+        User user = new User();
+        user.setEmail(userInfo.getEmail()); // 카카오 계정은 이매일이 카카오에서 주는 아이디값
+        user.setImgUrl(user.getImgUrl());
+        user.setNickname(userInfo.getNickname());
+        user.setPassword("");
+        userMapper.insertUserInfo(user);
+    }
 }
