@@ -85,9 +85,9 @@ public class KakaoService {
     }
 
 
-    public Map<String, Object> getKaKaoUserInfo(String access_token) {
+    public Map<String, String> getKaKaoUserInfo(String access_token) {
         String host = "https://kapi.kakao.com/v2/user/me";
-        Map<String, Object> result = new HashMap<>(); //key, value json 형식으로 데이터 내보내기 위해 hashMap 사용
+        Map<String, String> result = new HashMap<>(); //key, value json 형식으로 데이터 내보내기 위해 hashMap 사용
 
         try {
             URL url = new URL(host);
@@ -164,10 +164,17 @@ public class KakaoService {
     }
 
 
-    public Map<String, Object> KakaoLogin(String code) throws IOException{
+    public Map<String, String> KakaoLogin(String code) throws IOException{
         HashMap<String, String> tokenData = this.getKakaoToken(code);
-        System.out.println("hi");
-        return this.getKaKaoUserInfo(tokenData.get("access_token"));
+        Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));
+        if (!IsUserEmpty(userInfo.get("email"))) {
+            UserInfoDTO userInfoDTO = new UserInfoDTO();
+            userInfoDTO.setEmail(userInfo.get("id"));
+            userInfoDTO.setNickname(userInfo.get("nickname"));
+            userInfoDTO.setImgUrl(userInfo.get("profile_image"));
+            saveUser(userInfoDTO);
+        }
+        return userInfo;
     }
 
 
@@ -182,4 +189,14 @@ public class KakaoService {
         user.setPassword("");
         userMapper.insertUserInfo(user);
     }
+
+    public boolean IsUserEmpty(String email) {
+        User user = userMapper.selectUserInfo(email);
+        if (user == null) {
+            return false;
+        }
+        return true;
+    }
+
+
 }
