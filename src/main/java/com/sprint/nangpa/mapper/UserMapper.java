@@ -14,7 +14,7 @@ public interface UserMapper {
     int insertUserInfo(User user);
 
     /**
-     * 사용자 정보 조회
+     * 이메일(PK)을 통한 사용자 정보 조회
      *
      * @param  email : 사용자 이메일(PK)
      * @return User  : 사용자 정보
@@ -29,4 +29,12 @@ public interface UserMapper {
      * @return int  : 수정된 데이터 수
      */
     int updateUserInfo(User user);
+
+    /**
+     * 닉네임을 통한 사용자 정보 조회
+     *
+     * @param  nickname : 사용자 닉네임
+     * @return User     : 사용자 정보
+     */
+    User selectUserInfoByNickname(String nickname);
 }

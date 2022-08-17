@@ -44,4 +44,15 @@
     ]]>
     </update>
 
+    <!-- 닉네임을 통한 사용자 정보 조회 -->
+    <select id="selectUserInfoByNickname" parameterType="String" resultType="com.sprint.nangpa.model.User">
+    <![CDATA[
+        SELECT EMAIL
+             , NICKNAME
+             , IMG_URL
+          FROM USER
+         WHERE NICKNAME = #{nickname}
+    ]]>
+    </select>
+
 </mapper>

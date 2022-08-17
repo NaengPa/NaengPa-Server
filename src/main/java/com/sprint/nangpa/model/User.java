@@ -1,9 +1,7 @@
 package com.sprint.nangpa.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.sprint.nangpa.dto.user.UserInfoDTO;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -35,4 +33,18 @@ public class User implements Serializable {
      * 프로필 사진 URL
      */
     private String imgUrl;
+
+    @Builder
+    public User(String email, String nickname, String password, String imgUrl) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.imgUrl = imgUrl;
+    }
+
+    public User(UserInfoDTO userInfo) {
+        this.email    = userInfo.getEmail();
+        this.nickname = userInfo.getNickname();
+        this.imgUrl   = userInfo.getImgUrl();
+    }
 }
