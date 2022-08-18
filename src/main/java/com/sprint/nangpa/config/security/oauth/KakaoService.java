@@ -7,7 +7,6 @@ import com.sprint.nangpa.model.User;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ import java.util.Map;
 @Service
 public class KakaoService {
 
-    @Autowired
     private final UserMapper userMapper;
 
     @Autowired
@@ -57,9 +55,6 @@ public class KakaoService {
         try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()))) {
             bw.write(sb);
             bw.flush();
-
-            int responseCode = urlConnection.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
                 String line;
@@ -101,12 +96,6 @@ public class KakaoService {
             urlConnection.setRequestProperty("Authorization", "Bearer " + access_token);
             urlConnection.setRequestMethod("GET");
 
-            int responseCode = urlConnection.getResponseCode();
-            System.out.println("responseCode = " + responseCode);
-
-            JSONObject obj;
-            JSONObject properties;
-
             try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))){
                 String line;
                 StringBuilder res = new StringBuilder();
@@ -118,22 +107,18 @@ public class KakaoService {
                 System.out.println("res = " + res);
 
                 JSONParser parser = new JSONParser();
-                obj = (JSONObject) parser.parse(res.toString());
-                JSONObject kakao_account = (JSONObject) obj.get("kakao_account");
+                JSONObject obj = (JSONObject) parser.parse(res.toString());
 
-                properties = (JSONObject) obj.get("properties");
+                JSONObject properties = (JSONObject) obj.get("properties");
+
+                String id = obj.get("id").toString();
+                String nickname = properties.get("nickname").toString();
+                String profile_image = properties.get("profile_image").toString();
+
+                result.put("id", id);
+                result.put("nickname", nickname);
+                result.put("profile_image", profile_image);
             }
-
-
-            String id = obj.get("id").toString();
-            String nickname = properties.get("nickname").toString();
-            String profile_image = properties.get("profile_image").toString();
-
-            result.put("id", id);
-            result.put("nickname", nickname);
-            result.put("profile_image", profile_image);
-
-
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -169,10 +154,17 @@ public class KakaoService {
     }
 
 
+<<<<<<< HEAD
     public String KakaoLogin(String code) throws IOException{
         HashMap<String, String> tokenData = this.getKakaoToken(code); // 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
         Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
         if (IsUserEmpty(userInfo.get("id"))) { // 카카오 계정은 이매일이 카카오에서 주는 아이디값
+=======
+    public Map<String, String> KakaoLogin(String code) throws IOException{
+        HashMap<String, String> tokenData = this.getKakaoToken(code);
+        Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));
+        if (IsUserEmpty(userInfo.get("email"))) {
+>>>>>>> 79f5af84cd26da421ba0db854f88b0f69a2f7993
             UserInfoDTO userInfoDTO = new UserInfoDTO();
             userInfoDTO.setEmail(userInfo.get("id"));
             userInfoDTO.setNickname(userInfo.get("nickname"));
@@ -184,22 +176,25 @@ public class KakaoService {
 
 
     public void saveUser(UserInfoDTO userInfo) {
-        User user = new User();
-        user.setEmail(userInfo.getEmail()); // 카카오 계정은 이매일이 카카오에서 주는 아이디값
-        user.setImgUrl(user.getImgUrl());
-        user.setNickname(userInfo.getNickname());
-        user.setPassword("");
+        User user = new User(userInfo);
+
         userMapper.insertUserInfo(user);
     }
 
+
     public boolean IsUserEmpty(String email) {
         User user = userMapper.selectUserInfo(email);
+<<<<<<< HEAD
         if (user == null) {
             return true;
         }
         return false;
     }
+=======
+>>>>>>> 79f5af84cd26da421ba0db854f88b0f69a2f7993
 
+        return user == null;
+    }
 
 
 
