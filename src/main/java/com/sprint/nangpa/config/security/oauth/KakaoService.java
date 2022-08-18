@@ -7,6 +7,7 @@ import com.sprint.nangpa.model.User;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -154,17 +155,10 @@ public class KakaoService {
     }
 
 
-<<<<<<< HEAD
     public String KakaoLogin(String code) throws IOException{
         HashMap<String, String> tokenData = this.getKakaoToken(code); // 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
         Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
         if (IsUserEmpty(userInfo.get("id"))) { // 카카오 계정은 이매일이 카카오에서 주는 아이디값
-=======
-    public Map<String, String> KakaoLogin(String code) throws IOException{
-        HashMap<String, String> tokenData = this.getKakaoToken(code);
-        Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));
-        if (IsUserEmpty(userInfo.get("email"))) {
->>>>>>> 79f5af84cd26da421ba0db854f88b0f69a2f7993
             UserInfoDTO userInfoDTO = new UserInfoDTO();
             userInfoDTO.setEmail(userInfo.get("id"));
             userInfoDTO.setNickname(userInfo.get("nickname"));
@@ -184,19 +178,10 @@ public class KakaoService {
 
     public boolean IsUserEmpty(String email) {
         User user = userMapper.selectUserInfo(email);
-<<<<<<< HEAD
         if (user == null) {
             return true;
         }
         return false;
     }
-=======
->>>>>>> 79f5af84cd26da421ba0db854f88b0f69a2f7993
-
-        return user == null;
-    }
-
-
-
 
 }
