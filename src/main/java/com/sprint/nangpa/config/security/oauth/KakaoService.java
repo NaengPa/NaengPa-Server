@@ -1,5 +1,6 @@
 package com.sprint.nangpa.config.security.oauth;
 
+import com.sprint.nangpa.config.security.jwt.JwtTokenProvider;
 import com.sprint.nangpa.dto.user.UserInfoDTO;
 import com.sprint.nangpa.mapper.UserMapper;
 import com.sprint.nangpa.model.User;
@@ -22,15 +23,19 @@ public class KakaoService {
     @Autowired
     private final UserMapper userMapper;
 
+    @Autowired
+    private final JwtTokenProvider jwtTokenProvider;
+
     final String clientId;
 
     final String redirect_uri;
 
 
-    public KakaoService(UserMapper userMapper, @Value("${kakao_rest_api_key}") String clientId, @Value("${redirect_uri}") String redirect_uri) {
+    public KakaoService(UserMapper userMapper, @Value("${kakao_rest_api_key}") String clientId, @Value("${redirect_uri}") String redirect_uri,  JwtTokenProvider  jwtTokenProvider) {
         this.userMapper = userMapper;
         this.clientId = clientId;
         this.redirect_uri = redirect_uri;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
 
@@ -164,17 +169,17 @@ public class KakaoService {
     }
 
 
-    public Map<String, String> KakaoLogin(String code) throws IOException{
-        HashMap<String, String> tokenData = this.getKakaoToken(code);
-        Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));
-        if (!IsUserEmpty(userInfo.get("email"))) {
+    public String KakaoLogin(String code) throws IOException{
+        HashMap<String, String> tokenData = this.getKakaoToken(code); // 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
+        Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
+        if (IsUserEmpty(userInfo.get("id"))) { // 카카오 계정은 이매일이 카카오에서 주는 아이디값
             UserInfoDTO userInfoDTO = new UserInfoDTO();
             userInfoDTO.setEmail(userInfo.get("id"));
             userInfoDTO.setNickname(userInfo.get("nickname"));
             userInfoDTO.setImgUrl(userInfo.get("profile_image"));
             saveUser(userInfoDTO);
         }
-        return userInfo;
+        return this.jwtTokenProvider.makeJwtToken(userInfo.get("email"));
     }
 
 
@@ -190,9 +195,9 @@ public class KakaoService {
     public boolean IsUserEmpty(String email) {
         User user = userMapper.selectUserInfo(email);
         if (user == null) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
 

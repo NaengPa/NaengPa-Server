@@ -31,6 +31,7 @@ dependencies {
     implementation group: 'org.bgee.log4jdbc-log4j2', name:'log4jdbc-log4j2-jdbc4.1', version: '1.16'
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
 }

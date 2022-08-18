@@ -4,17 +4,19 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConstructorBinding;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Getter
 @ConstructorBinding
+@Component
 public class JwtProperties {
     @Value("${issuer}")
-    private final String issuer;
+    private String issuer;
 
     @Value("${secretKey}")
-    private final String secretKey;
+    private String secretKey;
 
     @Value("${tokenPrefix}")
-    private final String tokenPrefix;
+    private String tokenPrefix;
 }
