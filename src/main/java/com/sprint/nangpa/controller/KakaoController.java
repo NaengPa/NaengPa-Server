@@ -1,13 +1,10 @@
 package com.sprint.nangpa.controller;
 
-import com.sprint.nangpa.config.security.jwt.JwtTokenProvider;
+import com.sprint.nangpa.config.security.jwt.JwtAuthenticationFilter;
 import com.sprint.nangpa.config.security.oauth.KakaoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -18,8 +15,7 @@ import java.io.IOException;
 public class KakaoController {
 
     private final KakaoService ks;
-
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationFilter jwtFilter;
 
     /**
      * 카카오 서버에서 유저정보 조회
@@ -31,6 +27,12 @@ public class KakaoController {
     public String getToken(@RequestParam String code) throws IOException{
         return ks.KakaoLogin(code);
     }
+
+    @PostMapping("/login")
+    public String login(){
+        return "로그인 되었습니다.";
+    }
+
 
 }
 

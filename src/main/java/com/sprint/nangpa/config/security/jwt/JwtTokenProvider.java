@@ -1,5 +1,6 @@
 package com.sprint.nangpa.config.security.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,5 +29,25 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+
+    public Claims parseJwtToken(String authorizationHeader) {
+        validationAuthorizationHeader(authorizationHeader);
+        String token = extractToken(authorizationHeader);
+
+        return Jwts.parser()
+                .setSigningKey(jwtProperties.getSecretKey())
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    private void validationAuthorizationHeader(String header) {
+        if (header == null || !header.startsWith("Bearer ")) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private String extractToken(String authorizationHeader) {
+        return authorizationHeader.substring("Bearer ".length());
+    }
 }
 
