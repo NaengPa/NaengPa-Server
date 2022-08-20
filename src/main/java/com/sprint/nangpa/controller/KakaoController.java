@@ -15,7 +15,6 @@ import java.io.IOException;
 public class KakaoController {
 
     private final KakaoService ks;
-    private final JwtAuthenticationFilter jwtFilter;
 
     /**
      * 카카오 서버에서 유저정보 조회
@@ -28,7 +27,7 @@ public class KakaoController {
         return ks.KakaoLogin(code);
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String login(){
         return "로그인 되었습니다.";
     }

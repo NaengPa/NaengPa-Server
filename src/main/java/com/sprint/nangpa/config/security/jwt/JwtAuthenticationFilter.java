@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-//@WebFilter("/oauth/login")
 @Component
 @Getter
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+
 
     @Builder
     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
@@ -37,14 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
+        System.out.println("claims = " + claims);
 
         filterChain.doFilter(request, response);
 
     }
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request){
-        String path = request.getContextPath();
-        return !path.startsWith("/oauth/login");
-    }
 }
