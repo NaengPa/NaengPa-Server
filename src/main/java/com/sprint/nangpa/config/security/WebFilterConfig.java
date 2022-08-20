@@ -1,4 +1,4 @@
-package com.sprint.nangpa.config.env;
+package com.sprint.nangpa.config.security;
 
 import com.sprint.nangpa.config.security.jwt.JwtAuthenticationFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
