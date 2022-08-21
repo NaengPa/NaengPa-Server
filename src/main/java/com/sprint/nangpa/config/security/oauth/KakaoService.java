@@ -9,9 +9,18 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -38,7 +47,7 @@ public class KakaoService {
     }
 
 
-    public HashMap<String, String> getKakaoToken(String code) throws IOException {
+    public String getKakaoToken(String code) throws IOException, ParseException {
         // 인가코드로 토큰받기
         String host = "https://kauth.kakao.com/oauth/token";
         URL url = new URL(host);
@@ -46,43 +55,28 @@ public class KakaoService {
         urlConnection.setRequestMethod("POST");
         urlConnection.setDoOutput(true); // 데이터 기록 알려주기
 
-        HashMap<String, String> token = new HashMap<>();
+        RestTemplate rt = new RestTemplate();
 
-        String sb = "grant_type=authorization_code" +
-                "&client_id=" + clientId +
-                "&redirect_uri=" + redirect_uri +
-                "&code=" + code;
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/x-www-form-urlencoded");
 
-        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(urlConnection.getOutputStream()))) {
-            bw.write(sb);
-            bw.flush();
+        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+        param.add("grant_type", "authorization_code");
+        param.add("client_id", clientId);
+        param.add("redirect_uri", "http://localhost:3000/login");
+        param.add("code", code);
 
-            try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()))) {
-                String line;
-                StringBuilder result = new StringBuilder();
-                while ((line = br.readLine()) != null) {
-                    result.append(line);
-                }
-                System.out.println("result = " + result);
+        HttpEntity<MultiValueMap<String, String>> req = new HttpEntity<>(param, headers);
+//        String url, HttpMethod method, @Nullable HttpEntity<?> requestEntity,
+        ResponseEntity<String> res = rt.exchange(host,
+                HttpMethod.POST,
+                req,
+                String.class);
 
-                // json parsing
-                JSONParser parser = new JSONParser();
-                JSONObject elem = (JSONObject) parser.parse(result.toString());
+        JSONParser jsonParser = new JSONParser();
+        JSONObject parse = (JSONObject) jsonParser.parse(res.getBody());
 
-                String access_token = elem.get("access_token").toString();
-                String refresh_token = elem.get("refresh_token").toString();
-                System.out.println("refresh_token = " + refresh_token);
-                System.out.println("access_token = " + access_token);
-                token.put("access_token", access_token);
-            } catch (IOException | ParseException e) {
-                e.printStackTrace();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return token;
+        return (String) parse.get("access_token");
     }
 
 
@@ -155,12 +149,13 @@ public class KakaoService {
     }
 
 
-    public String KakaoLogin(String code) throws IOException{
-        HashMap<String, String> tokenData = this.getKakaoToken(code); // 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
-        Map<String, String> userInfo = this.getKaKaoUserInfo(tokenData.get("access_token"));  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
-        System.out.println("userInfo = " + userInfo);
+    public String KakaoLogin(String code) throws IOException, ParseException {
+//        HashMap<String, String> tokenData = this.getKakaoToken(code); // 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
+        String accessToken = this.getKakaoToken(code);// 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
+        Map<String, String> userInfo = this.getKaKaoUserInfo(accessToken);  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
         if (IsUserEmpty(userInfo.get("id"))) { // 카카오 계정은 이매일이 카카오에서 주는 아이디값
             UserInfoDTO userInfoDTO = new UserInfoDTO();
+            userInfoDTO.setEmail(userInfo.get("id"));
             userInfoDTO.setNickname(userInfo.get("nickname"));
             userInfoDTO.setImgUrl(userInfo.get("profile_image"));
             saveUser(userInfoDTO);
