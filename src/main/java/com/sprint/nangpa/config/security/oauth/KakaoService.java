@@ -47,13 +47,9 @@ public class KakaoService {
     }
 
 
-    public String getKakaoToken(String code) throws IOException, ParseException {
+    public String getKakaoToken(String code) throws ParseException {
         // 인가코드로 토큰받기
         String host = "https://kauth.kakao.com/oauth/token";
-        URL url = new URL(host);
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        urlConnection.setRequestMethod("POST");
-        urlConnection.setDoOutput(true); // 데이터 기록 알려주기
 
         RestTemplate rt = new RestTemplate();
 
@@ -67,7 +63,6 @@ public class KakaoService {
         param.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> req = new HttpEntity<>(param, headers);
-//        String url, HttpMethod method, @Nullable HttpEntity<?> requestEntity,
         ResponseEntity<String> res = rt.exchange(host,
                 HttpMethod.POST,
                 req,
