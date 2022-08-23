@@ -1,6 +1,7 @@
 package com.sprint.nangpa.controller;
 
 import com.sprint.nangpa.config.security.oauth.KakaoService;
+import com.sprint.nangpa.dto.user.UserInfoDTO;
 import com.sprint.nangpa.model.User;
 import com.sprint.nangpa.service.UserService;
 import io.jsonwebtoken.Claims;
@@ -32,9 +33,14 @@ public class KakaoController {
     }
 
     @GetMapping("/login")
-    public User login(@RequestAttribute Claims claims){
+    public UserInfoDTO login(@RequestAttribute Claims claims){
         String email = (String) claims.get("email");
-        return userService.getUserInfo(email);
+        User user = userService.getUserInfo(email);
+        UserInfoDTO result = new UserInfoDTO();
+        result.setImgUrl(user.getImgUrl());
+        result.setEmail(user.getEmail());
+        result.setNickname(user.getNickname());
+        return result;
     }
 
 }

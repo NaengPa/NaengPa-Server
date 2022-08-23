@@ -145,9 +145,9 @@ public class KakaoService {
 
 
     public String KakaoLogin(String code) throws IOException, ParseException {
-//        HashMap<String, String> tokenData = this.getKakaoToken(code); // 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
         String accessToken = this.getKakaoToken(code);// 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
         Map<String, String> userInfo = this.getKaKaoUserInfo(accessToken);  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
+        System.out.println("userInfo = " + userInfo);
         if (IsUserEmpty(userInfo.get("id"))) { // 카카오 계정은 이매일이 카카오에서 주는 아이디값
             UserInfoDTO userInfoDTO = new UserInfoDTO();
             userInfoDTO.setEmail(userInfo.get("id"));
