@@ -46,4 +46,15 @@ public class UserService {
 
         return user != null;
     }
+
+
+    /**
+     * 유저 정보 조회
+     *
+     * @param email : 유저 이메일
+     * @return User : 유저 정보
+     */
+    public User getUserInfo(String email) {
+        return userMapper.selectUserInfo(email);
+    }
 }

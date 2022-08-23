@@ -37,6 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
+
+        request.setAttribute("claims",claims);
         filterChain.doFilter(request, response);
     }
 

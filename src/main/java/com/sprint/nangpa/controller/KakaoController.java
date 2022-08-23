@@ -1,13 +1,13 @@
 package com.sprint.nangpa.controller;
 
 import com.sprint.nangpa.config.security.oauth.KakaoService;
+import com.sprint.nangpa.model.User;
+import com.sprint.nangpa.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -18,6 +18,7 @@ import java.io.IOException;
 public class KakaoController {
 
     private final KakaoService ks;
+    private final UserService userService;
 
     /**
      * 카카오 서버에서 유저정보 조회
@@ -31,10 +32,10 @@ public class KakaoController {
     }
 
     @GetMapping("/login")
-    public String login(){
-        return "로그인 되었습니다.";
+    public User login(@RequestAttribute Claims claims){
+        String email = (String) claims.get("email");
+        return userService.getUserInfo(email);
     }
-
 
 }
 
