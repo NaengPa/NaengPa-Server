@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sprint.nangpa.mapper.BoardMapper">
+
+    <!-- 게시글 저장 -->
+    <insert id="insertBoard" parameterType="com.sprint.nangpa.dto.board.BoardRegDTO" useGeneratedKeys="true" keyProperty="id">
+    <![CDATA[
+        INSERT
+          INTO BOARD
+               ( ID
+               , RECIPE_ID
+               , EMAIL
+               , CONTENT
+               , CREATE_DATE
+               )
+        VALUES ( #{id}
+               , #{recipeId}
+               , #{email}
+               , #{content}
+               , NOW()
+               )
+    ]]>
+    </insert>
+
+    <!-- 게시글 이미지 저장 -->
+    <insert id="insertMoardImg" parameterType="com.sprint.nangpa.model.BoardImg">
+    <![CDATA[
+        INSERT
+          INTO BOARD_IMG
+               ( BOARD_ID
+               , SORT_NO
+               , IMG
+               )
+        VALUES ( #{boardId}
+               , #{sortNo}
+               , #{img}
+               )
+    ]]>
+    </insert>
+
+</mapper>
