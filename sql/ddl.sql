@@ -77,3 +77,45 @@ create table RECIPE_LIKE ( EMAIL varchar(50) not null comment '사용자 아이�
 create index RECIPE_ID on RECIPE_LIKE (RECIPE_ID); create table REFRESH_TOKEN ( EMAIL varchar(50) not null comment '사용자 아이디' primary key, REFRESH_TOKEN varchar(200) null comment '사용자 아이디', constraint REFRESH_TOKEN_ibfk_1 foreign key (EMAIL) references USER (EMAIL) on delete cascade ) comment 'Refesh Token 관리 테이블' collate = utf8mb4_unicode_ci;
 create table REFRIGERATOR ( EMAIL varchar(50) not null comment '사용자 아이디', IRDNT_NM varchar(100) not null comment '재료명', primary key (EMAIL, IRDNT_NM), constraint REFRIGERATOR_ibfk_1 foreign key (EMAIL) references USER (EMAIL) on delete cascade ) comment '사용자 별 냉장고 관리 테이블' collate = utf8mb4_unicode_ci;
 
+
+CREATE TABLE REFRESH_TOKEN(
+    EMAIL			VARCHAR(50)					COMMENT	'사용자 아이디',
+    REFRESH_TOKEN	VARCHAR(200)				COMMENT	'사용자 아이디',
+    
+    PRIMARY KEY(EMAIL),
+    
+    FOREIGN KEY (EMAIL) REFERENCES USER(EMAIL) ON DELETE CASCADE
+) COMMENT 'Refesh Token 관리 테이블' DEFAULT CHARSET=utf8mb4 ENGINE=INNODB;
+
+CREATE TABLE BOARD(
+    ID				BIGINT			AUTO_INCREMENT	COMMENT '게시글 식별 값',
+    RECIPE_ID		BIGINT							COMMENT '레시피 코드',
+    EMAIL			VARCHAR(50)		NOT NULL		COMMENT '사용자 아이디',
+    CONTENT			VARCHAR(500)	NOT NULL		COMMENT '게시글 내용',
+    CREATE_DATE 	datetime		DEFAULT NOW()	COMMENT '생성 시간',
+    MODIFIED_DATE 	datetime						COMMENT '수정 시간',
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (RECIPE_ID) REFERENCES RECIPE_INFO (RECIPE_ID) ON DELETE NO ACTION
+) COMMENT '게시글 관리 테이블' DEFAULT CHARSET=utf8mb4 ENGINE=INNODB;
+
+CREATE TABLE BOARD_IMG(
+	BOARD_ID		BIGINT					COMMENT '게시글 식별 값',
+    SORT_NO			INT						COMMENT '이미지 순서',
+    IMG				BLOB		NOT NULL	COMMENT '이미지',
+
+    PRIMARY KEY (BOARD_ID, SORT_NO),
+
+    FOREIGN KEY (BOARD_ID) REFERENCES BOARD (ID) ON DELETE CASCADE
+) COMMENT '게시글 이미지 관리 테이블' DEFAULT CHARSET=utf8mb4 ENGINE=INNODB;
+
+CREATE TABLE BOARD_LIKE(
+	ID				BIGINT			AUTO_INCREMENT	COMMENT '게시글 좋아요 식별 값',
+	EMAIL			VARCHAR(50)				COMMENT '사용자 아이디',
+    BOARD_ID		BIGINT							COMMENT '게시글 식별 값',
+
+    PRIMARY KEY (ID),
+
+    FOREIGN KEY (BOARD_ID) 	REFERENCES BOARD (ID) 	ON DELETE CASCADE
+) COMMENT '커뮤니티 좋아요 관리 테이블' DEFAULT CHARSET=utf8mb4 ENGINE=INNODB;

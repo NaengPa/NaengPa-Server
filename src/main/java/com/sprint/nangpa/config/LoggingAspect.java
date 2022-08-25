@@ -40,7 +40,11 @@ public class LoggingAspect {
             log.info("  PARAMETER               => null");
         }else {
             for (Object arg : args) {
-                log.info("  PARAMETER TYPE/VALUE    => {}/{}", arg.getClass().getSimpleName(), arg);
+                if(arg == null){
+                    log.info("  PARAMETER               => null");
+                } else {
+                    log.info("  PARAMETER TYPE/VALUE    => {}/{}", arg.getClass().getSimpleName(), arg);
+                }
             }
         }
         log.info("}");

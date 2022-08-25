@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BoardRegDTO {
+public class BoardLikeAddDTO {
 
     /**
      * 게시글 식별 값
@@ -32,7 +32,7 @@ public class BoardRegDTO {
      */
     private String content;
 
-    public BoardRegDTO(BoardSaveDTO boardInfo) {
+    public BoardLikeAddDTO(BoardSaveDTO boardInfo) {
         this.recipeId = boardInfo.getRecipeId();
         this.email    = boardInfo.getEmail();
         this.content  = boardInfo.getContent();
