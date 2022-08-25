@@ -48,6 +48,16 @@ public class BoardInfoDTO implements Serializable {
     private String imgUrl;
 
     /**
+     * 게시글 좋아요 수
+     */
+    private long likes;
+
+    /**
+     * 사용자 좋아요 여부
+     */
+    private String likeYn;
+
+    /**
      * 이미지 데이터
      */
     private List<String> imgs;

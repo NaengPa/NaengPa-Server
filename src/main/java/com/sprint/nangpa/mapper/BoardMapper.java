@@ -31,9 +31,10 @@ public interface BoardMapper {
     /**
      * 게시글 정보 조회
      *
+     * @param  email              : 사용자 이메일
      * @return List<BoardInfoDTO> : 게시글 목록
      */
-    List<BoardInfoDTO> selectBoardInfoList();
+    List<BoardInfoDTO> selectBoardInfoList(String email);
 
     /**
      * 게시글 이미지 조회

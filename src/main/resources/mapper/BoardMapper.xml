@@ -35,7 +35,7 @@
     </insert>
 
     <!-- 게시글 목록 조회 -->
-    <select id="selectBoardInfoList" resultType="com.sprint.nangpa.dto.board.BoardInfoDTO">
+    <select id="selectBoardInfoList" parameterType="String" resultType="com.sprint.nangpa.dto.board.BoardInfoDTO">
     <![CDATA[
         SELECT A.ID
              , A.EMAIL
@@ -43,8 +43,33 @@
              , A.CONTENT
              , B.NICKNAME
              , B.IMG_URL
-          FROM BOARD A
-         INNER JOIN USER B   ON A.EMAIL = B.EMAIL
+             , (SELECT COUNT(*)
+                  FROM BOARD_LIKE C
+                 WHERE A.ID = C.BOARD_ID
+               ) AS LIKES
+
+    ]]>
+             <choose>
+                 <when test="email != '' and email != null">
+                 <![CDATA[
+                     , IFNULL((SELECT 'Y'
+                                 FROM BOARD_LIKE C
+                                WHERE A.ID = C.BOARD_ID
+                                  AND C.EMAIL = 'COS'
+                               )
+                             ,'N'
+                       )
+                 ]]>
+                 </when>
+                 <otherwise>
+                 <![CDATA[
+                     , 'N'
+                 ]]>
+                 </otherwise>
+             </choose>
+    <![CDATA[
+               AS LIKE_YN
+          FROM BOARD A  INNER JOIN USER B   ON A.EMAIL = B.EMAIL
     ]]>
     </select>
     <select id="selectBoardImg" parameterType="Long" resultType="String">

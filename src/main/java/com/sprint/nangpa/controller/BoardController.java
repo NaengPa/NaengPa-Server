@@ -38,11 +38,12 @@ public class BoardController {
     /**
      * 게시글 목록 조회
      *
+     * @param  email              : 사용자 아이디
      * @return List<BoardInfoDTO> : 게시글 목록
      */
     @GetMapping
-    public List<BoardInfoDTO> getBoardList() {
-        return boardService.getBoardInfoList();
+    public List<BoardInfoDTO> getBoardList(@RequestParam(required = false) String email) {
+        return boardService.getBoardInfoList(email);
     }
 
     /**
@@ -57,7 +58,7 @@ public class BoardController {
     }
 
     /**
-     * 게시글 수정
+     * 게시글 삭제
      *
      * @param  id      : 게시글 식별 값
      * @param  email   : 사용자 이메일

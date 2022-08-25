@@ -66,9 +66,9 @@ public class BoardService {
      *
      * @return List<BoardInfoDTO> : 게시글 목록
      */
-    public List<BoardInfoDTO> getBoardInfoList() {
+    public List<BoardInfoDTO> getBoardInfoList(String email) {
         // 게시글 목록 조회
-        List<BoardInfoDTO> boardInfoDTOS = boardMapper.selectBoardInfoList();
+        List<BoardInfoDTO> boardInfoDTOS = boardMapper.selectBoardInfoList(email);
 
         // 게시글 이미지 세팅
         for (BoardInfoDTO boardInfoDTO : boardInfoDTOS) {
