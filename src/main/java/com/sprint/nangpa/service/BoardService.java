@@ -33,30 +33,24 @@ public class BoardService {
     public boolean saveBoard(BoardInfoDTO boardInfoDTO) {
         BoardRegDTO boardRegDTO = new BoardRegDTO(boardInfoDTO);
 
+        // 게시글 저장
         boardMapper.insertBoard(boardRegDTO);
+        // 반환받은 게시글 식별 값 세팅
         long boardId = boardRegDTO.getId();
 
         if(boardId != 0) {
-            // 이미지 저장
-            final String base64Prefix = "data:image/png;base64,";
-
             for(String img : boardInfoDTO.getImgs()){
-                String base64Url = String.valueOf(img);
 
-                if(base64Url.startsWith(base64Prefix)){
-                    byte[] imgArr = Base64.getDecoder().decode(base64Url.substring(base64Prefix.length()));
+                // 이미지 저장 객체 세팅
+                BoardImg boardImg = new BoardImg();
+                boardImg.setBoardId(boardId);
+                boardImg.setImg(img);
 
-                    BoardImg boardImg = new BoardImg();
-                    boardImg.setBoardId(boardId);
-                    boardImg.setImg(imgArr);
+                // 이미지 저장
+                int res = boardMapper.insertMoardImg(boardImg);
 
-                    int res = boardMapper.insertMoardImg(boardImg);
-
-                    if(res != 1){
-                        throw new RuntimeException("이미지 저장에 실패했습니다.");
-                    }
-                } else {
-                    throw new RuntimeException("잘못 된 이미지 형식입니다.");
+                if(res != 1){
+                    throw new RuntimeException("이미지 저장에 실패했습니다.");
                 }
             }
         } else {

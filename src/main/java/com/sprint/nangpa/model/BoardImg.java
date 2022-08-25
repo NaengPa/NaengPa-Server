@@ -27,5 +27,5 @@ public class BoardImg {
     /**
      * 이미지 데이터
      */
-    private byte[] img;
+    private String img;
 }
