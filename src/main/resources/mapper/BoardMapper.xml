@@ -10,12 +10,10 @@
                ( RECIPE_ID
                , EMAIL
                , CONTENT
-               , CREATE_DATE
                )
         VALUES ( #{recipeId}
                , #{email}
                , #{content}
-               , NOW()
                )
     ]]>
     </insert>
@@ -35,5 +33,27 @@
                )
     ]]>
     </insert>
+
+    <!-- 게시글 목록 조회 -->
+    <select id="selectBoardInfoList" resultType="com.sprint.nangpa.dto.board.BoardInfoDTO">
+    <![CDATA[
+        SELECT A.ID
+             , A.EMAIL
+             , A.RECIPE_ID
+             , A.CONTENT
+             , B.NICKNAME
+             , B.IMG_URL
+          FROM BOARD A  INNER JOIN USER B   ON A.EMAIL = B.EMAIL
+    ]]>
+    </select>
+    <select id="selectBoardImg" parameterType="Long" resultType="String">
+    <![CDATA[
+        SELECT IMG
+          FROM BOARD_IMG
+         WHERE BOARD_ID = #{boardId}
+        ORDER BY
+            SORT_NO
+    ]]>
+    </select>
 
 </mapper>

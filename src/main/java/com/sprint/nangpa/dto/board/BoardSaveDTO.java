@@ -1,21 +1,21 @@
 package com.sprint.nangpa.dto.board;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
- * 커뮤니티 글 저장하기 위한 DTO
+ * 커뮤니티 저장 정보 DTO
  */
 @Getter
 @Setter
+@NoArgsConstructor
 @ToString
-public class BoardRegDTO {
-
-    /**
-     * 게시글 식별 값
-     */
-    private long id;
+public class BoardSaveDTO implements Serializable {
 
     /**
      * 레시피 코드
@@ -32,9 +32,8 @@ public class BoardRegDTO {
      */
     private String content;
 
-    public BoardRegDTO(BoardSaveDTO boardInfo) {
-        this.recipeId = boardInfo.getRecipeId();
-        this.email    = boardInfo.getEmail();
-        this.content  = boardInfo.getContent();
-    }
+    /**
+     * 이미지 데이터
+     */
+    private List<String> imgs;
 }

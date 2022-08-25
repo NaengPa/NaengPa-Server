@@ -1,8 +1,11 @@
 package com.sprint.nangpa.mapper;
 
+import com.sprint.nangpa.dto.board.BoardInfoDTO;
 import com.sprint.nangpa.dto.board.BoardRegDTO;
 import com.sprint.nangpa.model.BoardImg;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface BoardMapper {
@@ -22,4 +25,19 @@ public interface BoardMapper {
      * @return int      : 저장된 행의 수
      */
     int insertMoardImg(BoardImg boardImg);
+
+    /**
+     * 게시글 정보 조회
+     *
+     * @return List<BoardInfoDTO> : 게시글 목록
+     */
+    List<BoardInfoDTO> selectBoardInfoList();
+
+    /**
+     * 게시글 이미지 조회
+     *
+     * @param  boardId      : 게시글 식별 값
+     * @return List<String> : 이미지 목록
+     */
+    List<String> selectBoardImg(long boardId);
 }

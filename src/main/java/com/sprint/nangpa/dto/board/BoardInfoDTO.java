@@ -18,6 +18,11 @@ import java.util.List;
 public class BoardInfoDTO implements Serializable {
 
     /**
+     * 게시글 식별 값
+     */
+    private long id;
+
+    /**
      * 레시피 코드
      */
     private long recipeId;
@@ -31,6 +36,16 @@ public class BoardInfoDTO implements Serializable {
      * 게시글 내용
      */
     private String content;
+
+    /**
+     * 사용자 닉네임
+     */
+    private String nickname;
+
+    /**
+     * 프로필 사진 URL
+     */
+    private String imgUrl;
 
     /**
      * 이미지 데이터
