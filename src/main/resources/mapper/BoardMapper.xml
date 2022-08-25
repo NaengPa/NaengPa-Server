@@ -43,7 +43,8 @@
              , A.CONTENT
              , B.NICKNAME
              , B.IMG_URL
-          FROM BOARD A  INNER JOIN USER B   ON A.EMAIL = B.EMAIL
+          FROM BOARD A
+         INNER JOIN USER B   ON A.EMAIL = B.EMAIL
     ]]>
     </select>
     <select id="selectBoardImg" parameterType="Long" resultType="String">
@@ -66,5 +67,15 @@
            AND EMAIL         = #{email}
     ]]>
     </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteBoard" parameterType="com.sprint.nangpa.dto.board.BoardDelDTO">
+    <![CDATA[
+        DELETE
+          FROM BOARD
+         WHERE ID    = #{id}
+           AND email = #{email}
+    ]]>
+    </delete>
 
 </mapper>

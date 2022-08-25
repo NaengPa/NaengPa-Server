@@ -1,5 +1,6 @@
 package com.sprint.nangpa.controller;
 
+import com.sprint.nangpa.dto.board.BoardDelDTO;
 import com.sprint.nangpa.dto.board.BoardInfoDTO;
 import com.sprint.nangpa.dto.board.BoardModDTO;
 import com.sprint.nangpa.dto.board.BoardSaveDTO;
@@ -53,5 +54,23 @@ public class BoardController {
     @PutMapping
     public boolean modifiedBoard(@RequestBody BoardModDTO boardModDTO){
         return boardService.modifiedBoard(boardModDTO);
+    }
+
+    /**
+     * 게시글 수정
+     *
+     * @param  id      : 게시글 식별 값
+     * @param  email   : 사용자 이메일
+     * @return boolean : 삭제 결과
+     */
+    @DeleteMapping
+    public boolean deleteBoard(@RequestParam(value = "id") long id,
+                               @RequestParam(value = "email") String email){
+        BoardDelDTO boardDelDTO = BoardDelDTO.builder()
+                                            .id(id)
+                                            .email(email)
+                                            .build();
+
+        return boardService.deleteBoard(boardDelDTO);
     }
 }

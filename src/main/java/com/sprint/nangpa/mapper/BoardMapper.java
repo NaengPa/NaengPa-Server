@@ -1,5 +1,6 @@
 package com.sprint.nangpa.mapper;
 
+import com.sprint.nangpa.dto.board.BoardDelDTO;
 import com.sprint.nangpa.dto.board.BoardInfoDTO;
 import com.sprint.nangpa.dto.board.BoardModDTO;
 import com.sprint.nangpa.dto.board.BoardRegDTO;
@@ -49,4 +50,12 @@ public interface BoardMapper {
      * @return boolean     : 수정 결과
      */
     int updateBoard(BoardModDTO boardModDTO);
+
+    /**
+     * 게시글 수정
+     *
+     * @param  boardDelDTO : 게시글 삭제 정보
+     * @return boolean     : 삭제 결과
+     */
+    int deleteBoard(BoardDelDTO boardDelDTO);
 }

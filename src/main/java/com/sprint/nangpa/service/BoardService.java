@@ -1,9 +1,6 @@
 package com.sprint.nangpa.service;
 
-import com.sprint.nangpa.dto.board.BoardInfoDTO;
-import com.sprint.nangpa.dto.board.BoardModDTO;
-import com.sprint.nangpa.dto.board.BoardSaveDTO;
-import com.sprint.nangpa.dto.board.BoardRegDTO;
+import com.sprint.nangpa.dto.board.*;
 import com.sprint.nangpa.mapper.BoardMapper;
 import com.sprint.nangpa.model.BoardImg;
 import lombok.RequiredArgsConstructor;
@@ -95,5 +92,15 @@ public class BoardService {
     @Transactional(rollbackFor = Exception.class)
     public boolean modifiedBoard(BoardModDTO boardModDTO) {
         return boardMapper.updateBoard(boardModDTO) == 1;
+    }
+
+    /**
+     * 게시글 수정
+     *
+     * @param  boardDelDTO : 게시글 삭제 정보
+     * @return boolean     : 삭제 결과
+     */
+    public boolean deleteBoard(BoardDelDTO boardDelDTO) {
+        return boardMapper.deleteBoard(boardDelDTO) == 1;
     }
 }
