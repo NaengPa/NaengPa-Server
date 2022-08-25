@@ -155,13 +155,12 @@ public class KakaoService {
             userInfoDTO.setImgUrl(userInfo.get("profile_image"));
             saveUser(userInfoDTO);
         }
-        return this.jwtTokenProvider.makeJwtToken(userInfo.get("id")); // 카카오 계정은 이매일이 카카오에서 주는 아이디값이라 아이디 값으로 대체
+        return this.jwtTokenProvider.makeJwtToken(userInfo.get("id"),30); // 카카오 계정은 이매일이 카카오에서 주는 아이디값이라 아이디 값으로 대체
     }
 
 
     public void saveUser(UserInfoDTO userInfo) {
         User user = new User(userInfo);
-
         userMapper.insertUserInfo(user);
     }
 

@@ -16,14 +16,16 @@ public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
 
-    public String makeJwtToken(String email) {
+//    private final
+
+    public String makeJwtToken(String email, int minutes) {
         Date now = new Date();
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(30).toMillis()))
+                .setExpiration(new Date(now.getTime() + Duration.ofMinutes(minutes).toMillis()))
                 .claim("email", email)
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey())
                 .compact();
@@ -48,6 +50,14 @@ public class JwtTokenProvider {
 
     private String extractToken(String authorizationHeader) {
         return authorizationHeader.substring("Bearer ".length());
+    }
+
+    public String issueRefreshToken(String email) {
+        String newRefreshToken = makeJwtToken(email, 43800);//리프레쉬 토큰은 한달 기간
+
+
+
+        return newRefreshToken;
     }
 }
 
