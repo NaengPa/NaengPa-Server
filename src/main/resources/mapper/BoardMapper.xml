@@ -62,7 +62,8 @@
         UPDATE BOARD
            SET CONTENT       = #{content}
              , MODIFIED_DATE = NOW()
-         WHERE ID      = #{id}
+         WHERE ID            = #{id}
+           AND EMAIL         = #{email}
     ]]>
     </update>
 

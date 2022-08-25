@@ -25,4 +25,9 @@ public class BoardModDTO implements Serializable {
      * 게시글 내용
      */
     private String content;
+
+    /**
+     * 사용자 이메일
+     */
+    private String email;
 }
