@@ -39,11 +39,13 @@ public class BoardService {
         long boardId = boardRegDTO.getId();
 
         if(boardId != 0) {
+            int sortNo = 1;
             for(String img : boardInfoDTO.getImgs()){
 
                 // 이미지 저장 객체 세팅
                 BoardImg boardImg = new BoardImg();
                 boardImg.setBoardId(boardId);
+                boardImg.setSortNo(sortNo++);
                 boardImg.setImg(img);
 
                 // 이미지 저장
