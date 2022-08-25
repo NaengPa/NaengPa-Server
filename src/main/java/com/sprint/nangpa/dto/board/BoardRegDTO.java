@@ -13,6 +13,11 @@ import lombok.ToString;
 public class BoardRegDTO {
 
     /**
+     * 게시글 식별 값
+     */
+    private long id;
+
+    /**
      * 레시피 코드
      */
     private long recipeId;

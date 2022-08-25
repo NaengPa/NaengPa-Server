@@ -33,11 +33,12 @@ public class BoardService {
     public boolean saveBoard(BoardInfoDTO boardInfoDTO) {
         BoardRegDTO boardRegDTO = new BoardRegDTO(boardInfoDTO);
 
-        int boardId = boardMapper.inserBoard(boardRegDTO);
+        boardMapper.insertBoard(boardRegDTO);
+        long boardId = boardRegDTO.getId();
 
         if(boardId != 0) {
             // 이미지 저장
-            final String base64Prefix = "data:image/png;base64";
+            final String base64Prefix = "data:image/png;base64,";
 
             for(String img : boardInfoDTO.getImgs()){
                 String base64Url = String.valueOf(img);

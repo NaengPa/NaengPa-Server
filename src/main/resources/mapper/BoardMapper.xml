@@ -7,14 +7,12 @@
     <![CDATA[
         INSERT
           INTO BOARD
-               ( ID
-               , RECIPE_ID
+               ( RECIPE_ID
                , EMAIL
                , CONTENT
                , CREATE_DATE
                )
-        VALUES ( #{id}
-               , #{recipeId}
+        VALUES ( #{recipeId}
                , #{email}
                , #{content}
                , NOW()

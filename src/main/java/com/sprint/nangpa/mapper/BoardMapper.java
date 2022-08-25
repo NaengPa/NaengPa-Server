@@ -13,7 +13,7 @@ public interface BoardMapper {
      * @param  boardRegDTO : 게시글 정보
      * @return int         : 저장된 행의 수
      */
-    int inserBoard(BoardRegDTO boardRegDTO);
+    int insertBoard(BoardRegDTO boardRegDTO);
 
     /**
      * 게시글 이미지 저장
