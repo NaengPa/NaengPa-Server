@@ -1,6 +1,7 @@
 package com.sprint.nangpa.service;
 
 import com.sprint.nangpa.dto.board.BoardInfoDTO;
+import com.sprint.nangpa.dto.board.BoardModDTO;
 import com.sprint.nangpa.dto.board.BoardSaveDTO;
 import com.sprint.nangpa.dto.board.BoardRegDTO;
 import com.sprint.nangpa.mapper.BoardMapper;
@@ -63,6 +64,11 @@ public class BoardService {
         return true;
     }
 
+    /**
+     * 게시글 목록 조회
+     *
+     * @return List<BoardInfoDTO> : 게시글 목록
+     */
     public List<BoardInfoDTO> getBoardInfoList() {
         // 게시글 목록 조회
         List<BoardInfoDTO> boardInfoDTOS = boardMapper.selectBoardInfoList();
@@ -78,5 +84,16 @@ public class BoardService {
         }
 
         return boardInfoDTOS;
+    }
+
+    /**
+     * 게시글 수정
+     *
+     * @param  boardModDTO : 게시글 수정 정보
+     * @return boolean     : 수정 결과
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean modifiedBoard(BoardModDTO boardModDTO) {
+        return boardMapper.updateBoard(boardModDTO) == 1;
     }
 }

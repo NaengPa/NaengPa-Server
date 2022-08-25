@@ -1,6 +1,7 @@
 package com.sprint.nangpa.mapper;
 
 import com.sprint.nangpa.dto.board.BoardInfoDTO;
+import com.sprint.nangpa.dto.board.BoardModDTO;
 import com.sprint.nangpa.dto.board.BoardRegDTO;
 import com.sprint.nangpa.model.BoardImg;
 import org.apache.ibatis.annotations.Mapper;
@@ -40,4 +41,12 @@ public interface BoardMapper {
      * @return List<String> : 이미지 목록
      */
     List<String> selectBoardImg(long boardId);
+
+    /**
+     * 게시글 수정
+     *
+     * @param  boardModDTO : 게시글 수정 정보
+     * @return boolean     : 수정 결과
+     */
+    int updateBoard(BoardModDTO boardModDTO);
 }

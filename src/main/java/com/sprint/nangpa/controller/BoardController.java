@@ -1,12 +1,14 @@
 package com.sprint.nangpa.controller;
 
 import com.sprint.nangpa.dto.board.BoardInfoDTO;
+import com.sprint.nangpa.dto.board.BoardModDTO;
 import com.sprint.nangpa.dto.board.BoardSaveDTO;
 import com.sprint.nangpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 커뮤니티 관리 Controller
@@ -40,5 +42,16 @@ public class BoardController {
     @GetMapping
     public List<BoardInfoDTO> getBoardList() {
         return boardService.getBoardInfoList();
+    }
+
+    /**
+     * 게시글 수정
+     *
+     * @param  boardModDTO : 게시글 수정 내용
+     * @return boolean     : 수정 결과
+     */
+    @PutMapping
+    public boolean modifiedBoard(@RequestBody BoardModDTO boardModDTO){
+        return boardService.modifiedBoard(boardModDTO);
     }
 }

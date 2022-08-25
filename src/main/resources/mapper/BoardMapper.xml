@@ -56,4 +56,14 @@
     ]]>
     </select>
 
+    <!-- 게시글 수정 -->
+    <update id="updateBoard" parameterType="com.sprint.nangpa.dto.board.BoardModDTO">
+    <![CDATA[
+        UPDATE BOARD
+           SET CONTENT       = #{content}
+             , MODIFIED_DATE = NOW()
+         WHERE ID      = #{id}
+    ]]>
+    </update>
+
 </mapper>
