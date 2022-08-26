@@ -103,4 +103,45 @@
     ]]>
     </delete>
 
+    <!-- 게시글 좋아요 여부 조회 -->
+    <select id="selectBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO" resultType="java.lang.Integer">
+    <![CDATA[
+        SELECT ID
+          FROM BOARD_LIKE
+         WHERE BOARD_ID = #{boardId}
+           AND EMAIL    = #{email}
+    ]]>
+    </select>
+
+    <!-- 게시글 좋아요 수 조회 -->
+    <select id="selectBoardLikeCnt" parameterType="long" resultType="int">
+    <![CDATA[
+        SELECT COUNT(*)
+          FROM BOARD_LIKE
+         WHERE BOARD_ID = #{boardId}
+    ]]>
+    </select>
+
+    <!-- 게시글 좋아요 추가 -->
+    <insert id="insertBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO">
+    <![CDATA[
+        INSERT
+          INTO BOARD_LIKE
+               ( EMAIL
+               , BOARD_ID
+               )
+        VALUES ( #{email}
+               , #{boardId}
+               )
+    ]]>
+    </insert>
+
+    <!-- 게시글 좋아요 삭제 -->
+    <delete id="deleteBoardLike" parameterType="long">
+    <![CDATA[
+        DELETE
+          FROM BOARD_LIKE
+         WHERE ID = #{id}
+    ]]>
+    </delete>
 </mapper>

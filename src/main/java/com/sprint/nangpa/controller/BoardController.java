@@ -1,15 +1,11 @@
 package com.sprint.nangpa.controller;
 
-import com.sprint.nangpa.dto.board.BoardDelDTO;
-import com.sprint.nangpa.dto.board.BoardInfoDTO;
-import com.sprint.nangpa.dto.board.BoardModDTO;
-import com.sprint.nangpa.dto.board.BoardSaveDTO;
+import com.sprint.nangpa.dto.board.*;
 import com.sprint.nangpa.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 커뮤니티 관리 Controller
@@ -73,5 +69,16 @@ public class BoardController {
                                             .build();
 
         return boardService.deleteBoard(boardDelDTO);
+    }
+
+    /**
+     * 게시글 좋아요 추가/삭제
+     *
+     * @param  boardLikeDTO : 게시글 좋아요 정보
+     * @return int          : 해당 게시글 좋아요 수
+     */
+    @PostMapping("/like")
+    public int changeBoardLike(@RequestBody BoardLikeDTO boardLikeDTO){
+        return boardService.changeBoardLike(boardLikeDTO);
     }
 }
