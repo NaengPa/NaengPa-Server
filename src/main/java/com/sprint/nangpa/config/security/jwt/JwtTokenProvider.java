@@ -51,13 +51,5 @@ public class JwtTokenProvider {
     private String extractToken(String authorizationHeader) {
         return authorizationHeader.substring("Bearer ".length());
     }
-
-    public String issueRefreshToken(String email) {
-        String newRefreshToken = makeJwtToken(email, 43800);//리프레쉬 토큰은 한달 기간
-
-
-
-        return newRefreshToken;
-    }
 }
 
