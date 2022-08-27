@@ -5,6 +5,7 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
@@ -43,6 +45,7 @@ public class JwtTokenProvider {
     }
 
     private void validationAuthorizationHeader(String header) {
+        log.info("*******header : {}", header);
         if (header == null || !header.startsWith("Bearer ")) {
             throw new IllegalArgumentException();
         }
