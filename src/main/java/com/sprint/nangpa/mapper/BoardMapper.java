@@ -1,10 +1,8 @@
 package com.sprint.nangpa.mapper;
 
-import com.sprint.nangpa.dto.board.BoardDelDTO;
-import com.sprint.nangpa.dto.board.BoardInfoDTO;
-import com.sprint.nangpa.dto.board.BoardModDTO;
-import com.sprint.nangpa.dto.board.BoardRegDTO;
+import com.sprint.nangpa.dto.board.*;
 import com.sprint.nangpa.model.BoardImg;
+import com.sprint.nangpa.model.BoardLike;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -59,4 +57,37 @@ public interface BoardMapper {
      * @return boolean     : 삭제 결과
      */
     int deleteBoard(BoardDelDTO boardDelDTO);
+
+    /**
+     * 게시글 좋아요 조회
+     *
+     * @param  boardId : 게시글 식별 값
+     * @return int     : 좋아요 수
+     */
+    int selectBoardLikeCnt(long boardId);
+
+    /**
+     * 좋아요 여부 조회
+     *
+     * @param  boardLikeDTO : 게시글 좋아요 정보
+     * @return Integer      : 조회 게시글 좋아요 식별 값
+     *                        (null 일 수 있어 wrapper 클래스 사용)
+     */
+    Integer selectBoardLike(BoardLikeDTO boardLikeDTO);
+
+    /**
+     * 게시글 좋아요 추가
+     *
+     * @param  boardLikeDTO : 게시글 좋아요 정보
+     * @return int          : 저장 결과
+     */
+    int insertBoardLike(BoardLikeDTO boardLikeDTO);
+
+    /**
+     * 게시글 좋아요 삭제
+     *
+     * @param  id  : 게시글 좋아요 식별 값
+     * @return int : 삭제 결과
+     */
+    int deleteBoardLike(long id);
 }

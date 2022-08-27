@@ -103,4 +103,29 @@ public class BoardService {
     public boolean deleteBoard(BoardDelDTO boardDelDTO) {
         return boardMapper.deleteBoard(boardDelDTO) == 1;
     }
+
+    /**
+     * 게시글 좋아요 추가
+     *
+     * @param  boardLikeDTO : 게시글 좋아요 정보
+     * @return int          : 해당 게시글 좋아요 수
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public int changeBoardLike(BoardLikeDTO boardLikeDTO) {
+        // 저장된 좋아요 조회
+        Integer boardLikeId = boardMapper.selectBoardLike(boardLikeDTO);
+
+        int res;
+        if(boardLikeId == null){    // 저장된 좋아요가 없으면 추가
+            res = boardMapper.insertBoardLike(boardLikeDTO);
+        } else {                    // 저장된 좋아요가 있으면 삭제
+            res = boardMapper.deleteBoardLike(boardLikeId);
+        }
+
+        if(res < 1){
+            throw new RuntimeException("좋아요 실패!!");
+        }
+
+        return boardMapper.selectBoardLikeCnt(boardLikeDTO.getBoardId());
+    }
 }
