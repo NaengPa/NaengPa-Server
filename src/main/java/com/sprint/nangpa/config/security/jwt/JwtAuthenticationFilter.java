@@ -35,31 +35,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "authorization, content-type, xsrf-token");
-        response.addHeader("Access-Control-Expose-Headers", "xsrf-token");
-
-
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
 
         request.setAttribute("claims",claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
-
-        if ("OPTIONS".equals(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            filterChain.doFilter(request, response);
-        }
-
-
-
-//        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
-//
-//        request.setAttribute("claims",claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
-//        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 
 }

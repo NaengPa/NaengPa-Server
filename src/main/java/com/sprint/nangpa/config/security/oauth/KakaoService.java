@@ -59,7 +59,8 @@ public class KakaoService {
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
         param.add("grant_type", "authorization_code");
         param.add("client_id", clientId);
-        param.add("redirect_uri", "http://localhost:3000/login");
+//        param.add("redirect_uri", "http://localhost:3000/login");
+        param.add("redirect_uri", "https://naengdev.netlify.app/login");
         param.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> req = new HttpEntity<>(param, headers);
