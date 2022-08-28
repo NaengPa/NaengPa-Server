@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,11 +36,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-        Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
+        if(!HttpMethod.OPTIONS.matches(request.getMethod())){
+            String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
 
-        request.setAttribute("claims",claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
-        filterChain.doFilter(request, response);
+            request.setAttribute("claims",claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
+            filterChain.doFilter(request, response);
+        }
     }
 
 }
