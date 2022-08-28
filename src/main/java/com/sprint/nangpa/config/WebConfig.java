@@ -14,8 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // /이하 모든 요청에 대해 cors 적용
-                .allowedOrigins("https://naengdev.netlify.app/")
-                .allowedOrigins("http://localhost:3000/")
+                .allowedOrigins("*")
                 .allowedMethods(
                         HttpMethod.GET.name(),
                         HttpMethod.HEAD.name(),
