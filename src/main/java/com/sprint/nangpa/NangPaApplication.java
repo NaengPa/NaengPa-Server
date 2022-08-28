@@ -19,7 +19,7 @@ public class NangPaApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://naengdev.netlify.app");
+                registry.addMapping("/**").allowedOrigins("https://naengdev.netlify.app", "http://localhost:3000", "http://localhost:5000");
             }
         };
     }
