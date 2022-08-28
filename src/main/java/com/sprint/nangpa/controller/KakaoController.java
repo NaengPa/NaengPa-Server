@@ -27,12 +27,12 @@ public class KakaoController {
      * @return accessToken : 엑세스 토큰
      * @throws IOException
      */
-    @PostMapping("/kakao")
+    @GetMapping("/kakao")
     public String getToken(@RequestParam String code) throws IOException, ParseException {
         return ks.KakaoLogin(code);
     }
 
-    @PostMapping("/login")
+    @PutMapping("/login")
     public UserInfoDTO login(@RequestAttribute Claims claims){
         String email = (String) claims.get("email");
         User user = userService.getUserInfo(email);
