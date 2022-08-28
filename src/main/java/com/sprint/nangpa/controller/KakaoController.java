@@ -32,7 +32,7 @@ public class KakaoController {
         return ks.KakaoLogin(code);
     }
 
-    @PutMapping("/login")
+    @GetMapping("/login")
     public UserInfoDTO login(@RequestAttribute Claims claims){
         String email = (String) claims.get("email");
         User user = userService.getUserInfo(email);
@@ -42,6 +42,5 @@ public class KakaoController {
         result.setNickname(user.getNickname());
         return result;
     }
-
 }
 
