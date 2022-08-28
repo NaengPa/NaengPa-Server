@@ -33,6 +33,7 @@ public class KakaoController {
     }
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "https://naengdev.netlify.app/")
     public UserInfoDTO login(@RequestAttribute Claims claims){
         String email = (String) claims.get("email");
         User user = userService.getUserInfo(email);
