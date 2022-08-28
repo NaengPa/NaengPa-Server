@@ -57,4 +57,14 @@ public class UserService {
     public User getUserInfo(String email) {
         return userMapper.selectUserInfo(email);
     }
+
+    /**
+     * 회원 가입
+     *
+     * @Param
+     * @return void
+     */
+    public void signIn() {
+
+    }
 }
