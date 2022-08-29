@@ -28,8 +28,8 @@ public class KakaoController {
      * @throws IOException
      */
     @GetMapping("/kakao")
-    public String getToken(@RequestParam String code) throws IOException, ParseException {
-        return ks.KakaoLogin(code);
+    public String getToken(@RequestParam(value = "code") String code, @RequestParam(value = "redirectUrl") String redirectUrl) throws IOException, ParseException {
+        return ks.KakaoLogin(code, redirectUrl);
     }
 
     @GetMapping("/login")

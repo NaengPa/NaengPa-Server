@@ -47,7 +47,7 @@ public class KakaoService {
     }
 
 
-    public String getKakaoToken(String code) throws ParseException {
+    public String getKakaoToken(String code, String redirectUrl) throws ParseException {
         // 인가코드로 토큰받기
         String host = "https://kauth.kakao.com/oauth/token";
 
@@ -63,7 +63,7 @@ public class KakaoService {
 
         // TODO : Redirect Url 파라미터로 받아서 적용
         //        로컬, 개발, 운영 서버 테스트에서 계속 변경할 수 없음
-        param.add("redirect_uri", "https://naengdev.netlify.app/login");
+        param.add("redirect_uri", redirectUrl);
         param.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> req = new HttpEntity<>(param, headers);
@@ -148,8 +148,8 @@ public class KakaoService {
     }
 
 
-    public String KakaoLogin(String code) throws IOException, ParseException {
-        String accessToken = this.getKakaoToken(code);// 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
+    public String KakaoLogin(String code, String redirectUrl) throws IOException, ParseException {
+        String accessToken = this.getKakaoToken(code, redirectUrl);// 인가 코드로 카카오 서버에 카카오 엑세스 토큰 요청
         Map<String, String> userInfo = this.getKaKaoUserInfo(accessToken);  //카카오 서버에 카카오 엑세스 토큰으로 유저정보 요청
         System.out.println("userInfo = " + userInfo);
         if (IsUserEmpty(userInfo.get("id"))) { // 카카오 계정은 이매일이 카카오에서 주는 아이디값
