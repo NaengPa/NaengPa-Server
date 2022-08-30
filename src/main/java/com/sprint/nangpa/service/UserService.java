@@ -57,4 +57,17 @@ public class UserService {
     public User getUserInfo(String email) {
         return userMapper.selectUserInfo(email);
     }
+
+
+    public String signUp(User submittedUserInfo) {
+
+        boolean duplCheckEmail = duplCheckEmail(submittedUserInfo.getEmail());
+        boolean duplCheckNickname = duplCheckNickname(submittedUserInfo.getNickname());
+        boolean isUserSaved = saveUser(submittedUserInfo);
+
+        if (isUserSaved) {
+            return "회원가입에 성공했습니다.";
+        }
+        return "회원가입에 실패했습니다.";
+    }
 }

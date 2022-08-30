@@ -48,12 +48,6 @@ public class UserController {
      */
     @PostMapping("/signUp")
     public String signUp(@RequestBody User submittedUserInfo) {
-
-        boolean isUserSaved = userService.saveUser(submittedUserInfo);
-
-        if (isUserSaved) {
-            return "회원가입에 성공했습니다.";
-        }
-        return "회원가입에 실패했습니다.";
+        return userService.signUp(submittedUserInfo);
     }
 }
