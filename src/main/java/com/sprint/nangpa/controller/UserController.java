@@ -1,5 +1,6 @@
 package com.sprint.nangpa.controller;
 
+import com.sprint.nangpa.dto.user.UserInfoDTO;
 import com.sprint.nangpa.model.User;
 import com.sprint.nangpa.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,17 @@ public class UserController {
      */
     @PostMapping("/signUp")
     public String signUp(@RequestBody User submittedUserInfo) {
-        return userService.signUp(submittedUserInfo);
+        try {
+            return userService.signUp(submittedUserInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.toString();
+        }
+    }
+
+    @PostMapping("/hello")
+    public User hello(@RequestBody UserInfoDTO getEmail) {
+        System.out.println("email = " + getEmail);
+        return userService.getUserInfo(getEmail.getEmail());
     }
 }

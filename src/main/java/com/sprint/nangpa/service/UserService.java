@@ -3,6 +3,7 @@ package com.sprint.nangpa.service;
 import com.sprint.nangpa.mapper.UserMapper;
 import com.sprint.nangpa.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -59,23 +60,32 @@ public class UserService {
     }
 
 
-    public String signUp(User submittedUserInfo) {
+    public String signUp(User submittedUserInfo) throws Exception{
 
         boolean duplCheckEmail = duplCheckEmail(submittedUserInfo.getEmail());
         boolean duplCheckNickname = duplCheckNickname(submittedUserInfo.getNickname());
+
+        if (duplCheckEmail) {
+            throw new Exception("중복된 이메일 입니다.");
+        }
+
+        if (duplCheckNickname) {
+            throw new Exception("중복된 닉네임 입니다.");
+        }
 
         User user = new User();
 
         user.setEmail(submittedUserInfo.getEmail());
         user.setImgUrl(submittedUserInfo.getImgUrl());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(submittedUserInfo.getPassword()));
+
+        boolean isUserSaved = saveUser(user);
 
 
-
-        boolean isUserSaved = saveUser(submittedUserInfo);
-
-        if (isUserSaved) {
-            return "회원가입에 성공했습니다.";
+        if (!isUserSaved) {
+            throw new Exception("회원가입에 실패했습니다.");
         }
-        return "회원가입에 실패했습니다.";
+        return "회원가입에 성공했습니다.";
     }
 }
