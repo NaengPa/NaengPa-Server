@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -45,8 +44,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.setHeader("Content-Type", "*");
 
         if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        }else {
+            response.setStatus(HttpServletResponse.SC_OK); //option 요청일때 필터검증 안함
+        }else { // 진짜 요청일때 필터 검증
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
 

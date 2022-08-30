@@ -63,6 +63,14 @@ public class UserService {
 
         boolean duplCheckEmail = duplCheckEmail(submittedUserInfo.getEmail());
         boolean duplCheckNickname = duplCheckNickname(submittedUserInfo.getNickname());
+
+        User user = new User();
+
+        user.setEmail(submittedUserInfo.getEmail());
+        user.setImgUrl(submittedUserInfo.getImgUrl());
+
+
+
         boolean isUserSaved = saveUser(submittedUserInfo);
 
         if (isUserSaved) {
