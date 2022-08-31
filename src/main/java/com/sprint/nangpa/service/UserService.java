@@ -1,8 +1,11 @@
 package com.sprint.nangpa.service;
 
+import com.sprint.nangpa.config.security.jwt.JwtTokenProvider;
+import com.sprint.nangpa.dto.user.SignInDto;
 import com.sprint.nangpa.mapper.UserMapper;
 import com.sprint.nangpa.model.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserMapper userMapper;
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     /**
      * 사용자 정보 저장
@@ -88,5 +93,29 @@ public class UserService {
             throw new Exception("회원가입에 실패했습니다.");
         }
         return "회원가입에 성공했습니다.";
+    }
+
+    /**
+     * 로그인 함수
+     *
+     * @Param    signInDto : 아이디, 비밀번호
+     * @return accessToken : 로그인시 발급해주는 엑세스 토큰
+     */
+    public String signIn(SignInDto signInDto) throws UsernameNotFoundException{
+        User user = getUserInfo(signInDto.getEmail());
+
+        if (user == null) {
+            throw new UsernameNotFoundException("이메일에 등록된 유저가 없습니다. 이메일을 다시 한번 확인해주세요.");
+        }
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        if (!passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) {
+            throw new UsernameNotFoundException("비밀번호가 일치 하지 않습니다.");
+        }
+
+
+        return this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 30);
+
     }
 }
