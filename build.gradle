@@ -37,7 +37,7 @@ dependencies {
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     runtimeOnly 'com.h2database:h2'
-
+    implementation 'org.slf4j:slf4j-api:1.7.31'
 }
 
 tasks.named('test') {

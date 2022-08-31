@@ -11,13 +11,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
+
+
     private final UserMapper userMapper;
 
     private final JwtTokenProvider jwtTokenProvider;
+
 
     /**
      * 사용자 정보 저장
@@ -66,7 +71,22 @@ public class UserService {
         return userMapper.selectUserInfo(email);
     }
 
+    /**
+     * 로그인 유저 정보 조회
+     *
+     * @param email : 유저 이메일
+     * @return User : 유저 정보
+     */
+    public User selectLoginUserInfo(String email) {
+        return userMapper.selectLoginUserInfo(email);
+    }
 
+    /**
+     * 회원 가입
+     *
+     * @param submittedUserInfo : 회원 가입
+     * @return String           : 로그인 성공 여부
+    */
     public String signUp(User submittedUserInfo){
 
         boolean duplCheckEmail = duplCheckEmail(submittedUserInfo.getEmail());
@@ -109,7 +129,7 @@ public class UserService {
      * @return accessToken : 로그인시 발급해주는 엑세스 토큰
      */
     public String signIn(SignInDto signInDto) throws UsernameNotFoundException{
-        User user = getUserInfo(signInDto.getEmail());
+        User user = selectLoginUserInfo(signInDto.getEmail());
 
         if (user == null) {
             throw new UsernameNotFoundException("이메일에 등록된 유저가 없습니다. 이메일을 다시 한번 확인해주세요.");
@@ -120,7 +140,6 @@ public class UserService {
         if (!passwordEncoder.matches(signInDto.getPassword(), user.getPassword())) {
             throw new UsernameNotFoundException("비밀번호가 일치 하지 않습니다.");
         }
-
 
         return this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 30);
 

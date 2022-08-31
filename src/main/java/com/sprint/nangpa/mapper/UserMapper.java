@@ -22,6 +22,14 @@ public interface UserMapper {
     User selectUserInfo(String email);
 
     /**
+     * 로그인시 이메일(PK)을 통한 사용자 정보 조회
+     *
+     * @param  email : 사용자 이메일(PK)
+     * @return User  : 사용자 정보
+     */
+    User selectLoginUserInfo(String email);
+
+    /**
      * 사용자 정보 수정
      *
      * @param  user : 수정될 사용자 정보

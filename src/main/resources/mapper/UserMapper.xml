@@ -27,10 +27,25 @@
         SELECT EMAIL
              , NICKNAME
              , IMG_URL
+
           FROM USER
          WHERE EMAIL = #{email}
     ]]>
     </select>
+
+    <!-- 로그인시 필요한 사용자 정보 조회 -->
+    <select id="selectLoginUserInfo" parameterType="String" resultType="com.sprint.nangpa.model.User">
+    <![CDATA[
+        SELECT EMAIL
+             , NICKNAME
+             , IMG_URL
+             , PASSWORD
+
+        FROM USER
+        WHERE EMAIL = #{email}
+        ]]>
+    </select>
+
 
     <!-- 사용자 정보 수정 -->
     <update id="updateUserInfo" parameterType="com.sprint.nangpa.model.User">
