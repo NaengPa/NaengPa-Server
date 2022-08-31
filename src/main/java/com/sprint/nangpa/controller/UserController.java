@@ -1,5 +1,6 @@
 package com.sprint.nangpa.controller;
 
+import com.sprint.nangpa.dto.user.SignInDto;
 import com.sprint.nangpa.dto.user.UserInfoDTO;
 import com.sprint.nangpa.model.User;
 import com.sprint.nangpa.service.UserService;
@@ -49,12 +50,12 @@ public class UserController {
      */
     @PostMapping("/signUp")
     public String signUp(@RequestBody User submittedUserInfo) {
-        try {
-            return userService.signUp(submittedUserInfo);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return e.toString();
-        }
+        return userService.signUp(submittedUserInfo);
+    }
+
+    @PostMapping("/signIn")
+    public String signIn(@RequestBody SignInDto signInDto) {
+        return userService.signIn(signInDto);
     }
 
     @PostMapping("/hello")

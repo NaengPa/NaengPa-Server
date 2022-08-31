@@ -5,6 +5,8 @@ import com.sprint.nangpa.dto.user.SignInDto;
 import com.sprint.nangpa.mapper.UserMapper;
 import com.sprint.nangpa.model.User;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,17 +67,17 @@ public class UserService {
     }
 
 
-    public String signUp(User submittedUserInfo) throws Exception{
+    public String signUp(User submittedUserInfo){
 
         boolean duplCheckEmail = duplCheckEmail(submittedUserInfo.getEmail());
         boolean duplCheckNickname = duplCheckNickname(submittedUserInfo.getNickname());
 
         if (duplCheckEmail) {
-            throw new Exception("중복된 이메일 입니다.");
+            throw new DuplicateKeyException("중복된 이메일 입니다.");
         }
 
         if (duplCheckNickname) {
-            throw new Exception("중복된 닉네임 입니다.");
+            throw new DuplicateKeyException("중복된 닉네임 입니다.");
         }
 
         User user = new User();
@@ -88,10 +90,15 @@ public class UserService {
 
         boolean isUserSaved = saveUser(user);
 
-
-        if (!isUserSaved) {
-            throw new Exception("회원가입에 실패했습니다.");
+        try {
+            if (!isUserSaved) {
+                throw new AuthenticationException("회원가입에 실패했습니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.toString();
         }
+
         return "회원가입에 성공했습니다.";
     }
 
