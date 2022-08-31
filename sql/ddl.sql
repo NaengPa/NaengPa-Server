@@ -25,7 +25,7 @@ create table RECIPE_CRSE
     cooking_no        bigint        not null comment '요리설명순서',
     cooking_dc        varchar(1000) null comment '요리설명',
     step_tip          varchar(1000) null comment '과정팁',
-    stre_step_img_url varchar(500)  null comment '과정 이미지 URL',
+    stre_step_img_url longblob      null comment '과정 이미지 URL',
     id                bigint        not null,
     primary key (recipe_id, cooking_no),
     constraint FKm8jasmgjejh2ulht0e3q824x8
