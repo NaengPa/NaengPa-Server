@@ -56,8 +56,8 @@ public class UserController {
     /**
      * 로그인
      *
-     * @param    signInDto : 유저가
-     * @return accessToken :
+     * @param    signInDto : 유저가 제출한 아이디
+     * @return   String    : 엑세스 토큰
      */
     @PostMapping("/signIn")
     public String signIn(@RequestBody SignInDto signInDto) {
