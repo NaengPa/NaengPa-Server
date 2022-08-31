@@ -77,6 +77,7 @@ public class UserService {
 
         user.setEmail(submittedUserInfo.getEmail());
         user.setImgUrl(submittedUserInfo.getImgUrl());
+        user.setNickname(submittedUserInfo.getNickname());
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         user.setPassword(passwordEncoder.encode(submittedUserInfo.getPassword()));
 
