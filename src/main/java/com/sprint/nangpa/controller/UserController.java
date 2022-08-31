@@ -53,6 +53,12 @@ public class UserController {
         return userService.signUp(submittedUserInfo);
     }
 
+    /**
+     * 로그인
+     *
+     * @param    signInDto : 유저가
+     * @return accessToken :
+     */
     @PostMapping("/signIn")
     public String signIn(@RequestBody SignInDto signInDto) {
         return userService.signIn(signInDto);
