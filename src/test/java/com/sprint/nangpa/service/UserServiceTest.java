@@ -85,4 +85,25 @@ public class UserServiceTest {
 //        fail("이메일 중복되므로 예외가 발생해야함");
     }
 
+    /**
+     * 회원 가입 테스트 - 다른 2명의 유저가 가입
+     */
+    @Test
+    public void signUp_two_User(){
+        //given
+        User user1 = new User("TestEmail1@gmail.com", "닉네임1", "비밀번호", "프로필 사진");
+        User user2 = new User("TestEmail2@gmail.com", "닉네임2", "비밀번호", "프로필 사진");
+
+        //when
+        String signUpText1 = userService.signUp(user1);
+        String signUpText2 = userService.signUp(user2);
+
+
+        //then
+        assertThat(signUpText1).isEqualTo("회원가입에 성공했습니다.");
+        assertThat(signUpText2).isEqualTo("회원가입에 성공했습니다.");
+
+    }
+
+
 }
