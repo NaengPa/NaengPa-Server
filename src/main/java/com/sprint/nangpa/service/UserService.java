@@ -92,6 +92,7 @@ public class UserService {
         boolean duplCheckEmail = duplCheckEmail(submittedUserInfo.getEmail());
         boolean duplCheckNickname = duplCheckNickname(submittedUserInfo.getNickname());
 
+
         if (duplCheckEmail) {
             throw new DuplicateKeyException("중복된 이메일 입니다.");
         }
