@@ -1,7 +1,6 @@
 package com.sprint.nangpa.controller;
 
 import com.sprint.nangpa.dto.user.SignInDto;
-import com.sprint.nangpa.dto.user.UserInfoDTO;
 import com.sprint.nangpa.model.User;
 import com.sprint.nangpa.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -62,11 +61,5 @@ public class UserController {
     @PostMapping("/signIn")
     public String signIn(@RequestBody SignInDto signInDto) {
         return userService.signIn(signInDto);
-    }
-
-    @PostMapping("/hello")
-    public User hello(@RequestBody UserInfoDTO getEmail) {
-        System.out.println("email = " + getEmail);
-        return userService.getUserInfo(getEmail.getEmail());
     }
 }
