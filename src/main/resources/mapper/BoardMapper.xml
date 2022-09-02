@@ -52,18 +52,18 @@
              <choose>
                  <when test="email != '' and email != null">
                  <![CDATA[
-                     , IFNULL((SELECT 'Y'
+                     , IFNULL((SELECT 1
                                  FROM BOARD_LIKE C
                                 WHERE A.ID = C.BOARD_ID
-                                  AND C.EMAIL = 'COS'
+                                  AND C.EMAIL = #{email}
                                )
-                             ,'N'
+                             , 0
                        )
                  ]]>
                  </when>
                  <otherwise>
                  <![CDATA[
-                     , 'N'
+                     , 0
                  ]]>
                  </otherwise>
              </choose>
@@ -72,6 +72,8 @@
           FROM BOARD A  INNER JOIN USER B   ON A.EMAIL = B.EMAIL
     ]]>
     </select>
+
+    <!-- 게시글 이미지 조회 -->
     <select id="selectBoardImg" parameterType="Long" resultType="String">
     <![CDATA[
         SELECT IMG

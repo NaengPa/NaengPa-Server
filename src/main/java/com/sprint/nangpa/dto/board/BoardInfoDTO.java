@@ -55,7 +55,7 @@ public class BoardInfoDTO implements Serializable {
     /**
      * 사용자 좋아요 여부
      */
-    private String likeYn;
+    private boolean likeYn;
 
     /**
      * 이미지 데이터
