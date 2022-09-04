@@ -44,7 +44,7 @@ public class UserController {
     /**
      * 회원 가입
      *
-     * @Param submittedUserInfo : 유저 정보(닉네임, 이메일, 비밀번호)
+     * @param submittedUserInfo : 유저 정보(닉네임, 이메일, 비밀번호)
      * @return String           : 회원 가입 성공했다는 문자열
      */
     @PostMapping("/signUp")

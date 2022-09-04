@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sprint.nangpa.mapper.RefrigeratorMapper">
+
+    <!-- 냉장고 재료 삭제 -->
+    <delete id="deleteRefrigeratorByEmail" parameterType="String">
+    <![CDATA[
+        DELETE
+          FROM REFRIGERATOR
+         WHERE EMAIL = #{email}
+    ]]>
+    </delete>
+
+    <!-- 냉장고 재료 저장 -->
+    <insert id="insertRefrigerator" parameterType="com.sprint.nangpa.dto.refrigerator.RefrigeratorInfoDTO">
+    <![CDATA[
+        INSERT
+          INTO REFRIGERATOR
+             ( EMAIL
+             , IRDNT_NM
+             )
+        VALUES
+    ]]>
+        <foreach collection="irdntNms" item="irdntNm" index="index" separator=",">
+        <![CDATA[
+             ( #{email}
+             , #{irdntNm}
+             )
+        ]]>
+        </foreach>
+    </insert>
+
+</mapper>
