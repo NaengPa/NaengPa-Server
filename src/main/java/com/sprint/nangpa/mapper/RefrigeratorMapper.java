@@ -23,4 +23,13 @@ public interface RefrigeratorMapper {
      * @return int          : 저장 데이터 수
      */
     int insertRefrigerator(RefrigeratorInfoDTO refrigerator);
+
+    /**
+     * 사용자 냉장고 재료 조회
+     *
+     * @param  email        : 사용자 아이디
+     * @return List<String> : 재료 목록
+     */
+    List<String> selectRefrigeratorByEmail(String email);
+
 }

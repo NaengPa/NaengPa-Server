@@ -30,4 +30,13 @@
         </foreach>
     </insert>
 
+    <!-- 사용자 냉장고 재료 조회 -->
+    <select id="selectRefrigeratorByEmail" parameterType="String" resultType="String">
+    <![CDATA[
+        SELECT IRDNT_NM
+          FROM REFRIGERATOR
+         WHERE EMAIL = #{email}
+    ]]>
+    </select>
+
 </mapper>

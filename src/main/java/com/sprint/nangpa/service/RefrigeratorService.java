@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * 냉장고 관리 Service
  */
@@ -37,5 +39,15 @@ public class RefrigeratorService {
         }
 
         return res > 0;
+    }
+
+    /**
+     * 사용자 냉장고 재료 목록 조회
+     *
+     * @param  email        : 사용자 아이디
+     * @return List<String> : 사용자 냉장고 재료 목록 조회
+     */
+    public List<String> selectRefrigeratorByEmail(String email) {
+        return refrigeratorMapper.selectRefrigeratorByEmail(email);
     }
 }
