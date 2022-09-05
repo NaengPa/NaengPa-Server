@@ -131,9 +131,11 @@
           INTO BOARD_LIKE
                ( EMAIL
                , BOARD_ID
+               , CREATE_DATE
                )
         VALUES ( #{email}
                , #{boardId}
+               , NOW()
                )
     ]]>
     </insert>
