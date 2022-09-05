@@ -86,8 +86,8 @@ public interface BoardMapper {
     /**
      * 게시글 좋아요 삭제
      *
-     * @param  id  : 게시글 좋아요 식별 값
-     * @return int : 삭제 결과
+     * @param  boardLikeDTO : 게시글 좋아요 정보
+     * @return int          : 삭제 결과
      */
-    int deleteBoardLike(long id);
+    int deleteBoardLike(BoardLikeDTO boardLikeDTO);
 }

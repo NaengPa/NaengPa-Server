@@ -113,13 +113,13 @@ public class BoardService {
     @Transactional(rollbackFor = Exception.class)
     public int changeBoardLike(BoardLikeDTO boardLikeDTO) {
         // 저장된 좋아요 조회
-        Integer boardLikeId = boardMapper.selectBoardLike(boardLikeDTO);
+        int cnt = boardMapper.selectBoardLike(boardLikeDTO);
 
         int res;
-        if(boardLikeId == null){    // 저장된 좋아요가 없으면 추가
+        if(cnt == 0){    // 저장된 좋아요가 없으면 추가
             res = boardMapper.insertBoardLike(boardLikeDTO);
         } else {                    // 저장된 좋아요가 있으면 삭제
-            res = boardMapper.deleteBoardLike(boardLikeId);
+            res = boardMapper.deleteBoardLike(boardLikeDTO);
         }
 
         if(res < 1){

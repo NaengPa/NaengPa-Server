@@ -106,9 +106,9 @@
     </delete>
 
     <!-- 게시글 좋아요 여부 조회 -->
-    <select id="selectBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO" resultType="java.lang.Integer">
+    <select id="selectBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO" resultType="int">
     <![CDATA[
-        SELECT ID
+        SELECT COUNT(*)
           FROM BOARD_LIKE
          WHERE BOARD_ID = #{boardId}
            AND EMAIL    = #{email}
@@ -141,11 +141,12 @@
     </insert>
 
     <!-- 게시글 좋아요 삭제 -->
-    <delete id="deleteBoardLike" parameterType="long">
+    <delete id="deleteBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO">
     <![CDATA[
         DELETE
           FROM BOARD_LIKE
-         WHERE ID = #{id}
+         WHERE EMAIL    = #{email}
+           AND BOARD_ID = #{boardId}
     ]]>
     </delete>
 </mapper>
