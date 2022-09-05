@@ -76,12 +76,28 @@
     </select>
 
     <!-- 게시글 이미지 조회 -->
-    <select id="selectBoardImg" parameterType="Long" resultType="String">
+    <select id="selectBoardImg" parameterType="Long" resultType="com.sprint.nangpa.dto.board.BoardImgDTO">
     <![CDATA[
-        SELECT IMG
+        SELECT BOARD_ID
+             , IMG
           FROM BOARD_IMG
-         WHERE BOARD_ID = #{boardId}
+    ]]>
+        <if test="!boardIds.isEmpty()">
+        <![CDATA[
+         WHERE BOARD_ID IN (
+        ]]>
+                            <foreach collection="boardIds" item="boardId" separator=",">
+                            <![CDATA[
+                                #{boardId}
+                            ]]>
+                            </foreach>
+        <![CDATA[
+                           )
+        ]]>
+        </if>
+    <![CDATA[
         ORDER BY
+            BOARD_ID,
             SORT_NO
     ]]>
     </select>

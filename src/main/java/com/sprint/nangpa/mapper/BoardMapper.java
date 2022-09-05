@@ -2,7 +2,6 @@ package com.sprint.nangpa.mapper;
 
 import com.sprint.nangpa.dto.board.*;
 import com.sprint.nangpa.model.BoardImg;
-import com.sprint.nangpa.model.BoardLike;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -37,10 +36,11 @@ public interface BoardMapper {
     /**
      * 게시글 이미지 조회
      *
-     * @param  boardId      : 게시글 식별 값
+     * @param  boardIds     : 게시글 식별 값
      * @return List<String> : 이미지 목록
      */
-    List<String> selectBoardImg(long boardId);
+//    List<String> selectBoardImg(long boardId);
+    List<BoardImgDTO> selectBoardImg(List<Long> boardIds);
 
     /**
      * 게시글 수정
@@ -70,10 +70,9 @@ public interface BoardMapper {
      * 좋아요 여부 조회
      *
      * @param  boardLikeDTO : 게시글 좋아요 정보
-     * @return Integer      : 조회 게시글 좋아요 식별 값
-     *                        (null 일 수 있어 wrapper 클래스 사용)
+     * @return int          : 조회 게시글 좋아요 수
      */
-    Integer selectBoardLike(BoardLikeDTO boardLikeDTO);
+    int selectBoardLike(BoardLikeDTO boardLikeDTO);
 
     /**
      * 게시글 좋아요 추가
