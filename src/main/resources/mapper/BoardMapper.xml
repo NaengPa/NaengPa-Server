@@ -70,6 +70,8 @@
     <![CDATA[
                AS LIKE_YN
           FROM BOARD A  INNER JOIN USER B   ON A.EMAIL = B.EMAIL
+        ORDER BY
+            A.ID DESC
     ]]>
     </select>
 
