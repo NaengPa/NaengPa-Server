@@ -7,7 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 커뮤니티 관리 Service
@@ -70,14 +73,26 @@ public class BoardService {
         // 게시글 목록 조회
         List<BoardInfoDTO> boardInfoDTOS = boardMapper.selectBoardInfoList(email);
 
-        // 게시글 이미지 세팅
-        for (BoardInfoDTO boardInfoDTO : boardInfoDTOS) {
-            long boardId = boardInfoDTO.getId();
+        // 게시글 목록이 있는 경우
+        if(boardInfoDTOS.size() > 0) {
+            Map<Long, Integer> adap = new HashMap<>();
 
-            // 이미지 조회
-            List<String> imgs = boardMapper.selectBoardImg(boardId);
-            // 이미지 세팅
-            boardInfoDTO.setImgs(imgs);
+            List<Long> boardIds = new ArrayList<>();
+
+            // 게시글 번호 세팅
+            for (int i = 0; i < boardInfoDTOS.size(); i++) {
+                boardInfoDTOS.get(i).setImgs(new ArrayList<>());
+                boardIds.add(boardInfoDTOS.get(i).getId());
+                adap.put(boardInfoDTOS.get(i).getId(), i);
+            }
+
+            // 게시글 이미지 조회
+            List<BoardImgDTO> imgs = boardMapper.selectBoardImg(boardIds);
+
+            // 게시글 이미지 세팅
+            for(BoardImgDTO img : imgs) {
+                boardInfoDTOS.get(adap.get(img.getBoardId())).getImgs().add(img.getImg());
+            }
         }
 
         return boardInfoDTOS;
@@ -113,13 +128,13 @@ public class BoardService {
     @Transactional(rollbackFor = Exception.class)
     public int changeBoardLike(BoardLikeDTO boardLikeDTO) {
         // 저장된 좋아요 조회
-        Integer boardLikeId = boardMapper.selectBoardLike(boardLikeDTO);
+        int cnt = boardMapper.selectBoardLike(boardLikeDTO);
 
         int res;
-        if(boardLikeId == null){    // 저장된 좋아요가 없으면 추가
+        if(cnt == 0){    // 저장된 좋아요가 없으면 추가
             res = boardMapper.insertBoardLike(boardLikeDTO);
         } else {                    // 저장된 좋아요가 있으면 삭제
-            res = boardMapper.deleteBoardLike(boardLikeId);
+            res = boardMapper.deleteBoardLike(boardLikeDTO);
         }
 
         if(res < 1){

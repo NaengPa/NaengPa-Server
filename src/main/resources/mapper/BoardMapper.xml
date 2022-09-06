@@ -70,16 +70,34 @@
     <![CDATA[
                AS LIKE_YN
           FROM BOARD A  INNER JOIN USER B   ON A.EMAIL = B.EMAIL
+        ORDER BY
+            A.ID DESC
     ]]>
     </select>
 
     <!-- 게시글 이미지 조회 -->
-    <select id="selectBoardImg" parameterType="Long" resultType="String">
+    <select id="selectBoardImg" parameterType="Long" resultType="com.sprint.nangpa.dto.board.BoardImgDTO">
     <![CDATA[
-        SELECT IMG
+        SELECT BOARD_ID
+             , IMG
           FROM BOARD_IMG
-         WHERE BOARD_ID = #{boardId}
+    ]]>
+        <if test="!boardIds.isEmpty()">
+        <![CDATA[
+         WHERE BOARD_ID IN (
+        ]]>
+                            <foreach collection="boardIds" item="boardId" separator=",">
+                            <![CDATA[
+                                #{boardId}
+                            ]]>
+                            </foreach>
+        <![CDATA[
+                           )
+        ]]>
+        </if>
+    <![CDATA[
         ORDER BY
+            BOARD_ID,
             SORT_NO
     ]]>
     </select>
@@ -106,9 +124,9 @@
     </delete>
 
     <!-- 게시글 좋아요 여부 조회 -->
-    <select id="selectBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO" resultType="java.lang.Integer">
+    <select id="selectBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO" resultType="int">
     <![CDATA[
-        SELECT ID
+        SELECT COUNT(*)
           FROM BOARD_LIKE
          WHERE BOARD_ID = #{boardId}
            AND EMAIL    = #{email}
@@ -131,19 +149,22 @@
           INTO BOARD_LIKE
                ( EMAIL
                , BOARD_ID
+               , CREATE_DATE
                )
         VALUES ( #{email}
                , #{boardId}
+               , NOW()
                )
     ]]>
     </insert>
 
     <!-- 게시글 좋아요 삭제 -->
-    <delete id="deleteBoardLike" parameterType="long">
+    <delete id="deleteBoardLike" parameterType="com.sprint.nangpa.dto.board.BoardLikeDTO">
     <![CDATA[
         DELETE
           FROM BOARD_LIKE
-         WHERE ID = #{id}
+         WHERE EMAIL    = #{email}
+           AND BOARD_ID = #{boardId}
     ]]>
     </delete>
 </mapper>
