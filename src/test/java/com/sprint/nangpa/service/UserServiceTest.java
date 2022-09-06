@@ -14,6 +14,8 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -124,12 +126,14 @@ public class UserServiceTest {
         SignInDto signInDto = new SignInDto();
         signInDto.setEmail(user.getEmail());
         signInDto.setPassword(user.getPassword());
-        String accessToken = userService.signIn(signInDto);// 로그인 해서 accessToken 받아오기
+
+        HashMap<String, String> tokenMap = userService.signIn(signInDto); //로그인 해서 accessToken, RefreshToken 받아오기
+
 
         //받아온 엑세스 토큰으로 유저정보 잘 받아와지나 테스트
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
-                .parseClaimsJws(accessToken)
+                .parseClaimsJws(tokenMap.get("accessToken"))
                 .getBody();
 
         String email = (String) claims.get("email");

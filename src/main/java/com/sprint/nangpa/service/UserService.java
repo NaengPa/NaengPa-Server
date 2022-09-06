@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 
 
 @Service
@@ -22,6 +23,8 @@ public class UserService {
     private final UserMapper userMapper;
 
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final TokenService tokenService;
 
 
     /**
@@ -128,7 +131,7 @@ public class UserService {
      * @Param    signInDto : 아이디, 비밀번호
      * @return accessToken : 로그인시 발급해주는 엑세스 토큰
      */
-    public String signIn(SignInDto signInDto) throws UsernameNotFoundException{
+    public HashMap<String, String> signIn(SignInDto signInDto) throws UsernameNotFoundException{
         User user = selectLoginUserInfo(signInDto.getEmail());
 
         if (user == null) {
@@ -141,7 +144,17 @@ public class UserService {
             throw new UsernameNotFoundException("비밀번호가 일치 하지 않습니다.");
         }
 
-        return this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 30);
+        String refreshToken = this.tokenService.issueRefreshToken(signInDto.getEmail());
+
+        String accessToken = this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 30);
+
+        HashMap<String, String> tokenMap = new HashMap<>();
+
+        tokenMap.put("accessToken", accessToken);
+
+        tokenMap.put("refreshToken", refreshToken);
+
+        return tokenMap;
 
     }
 }

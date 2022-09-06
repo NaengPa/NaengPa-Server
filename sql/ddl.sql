@@ -155,7 +155,7 @@ create table REFRESH_TOKEN
 (
     EMAIL         varchar(50)  not null comment '사용자 아이디'
         primary key,
-    REFRESH_TOKEN varchar(200) null comment '사용자 아이디',
+    REFRESH_TOKEN varchar(500) null comment '사용자 리프레쉬 토큰',
     constraint REFRESH_TOKEN_ibfk_1
         foreign key (EMAIL) references USER (EMAIL)
             on delete cascade

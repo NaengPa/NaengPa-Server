@@ -2,9 +2,12 @@ package com.sprint.nangpa.controller;
 
 import com.sprint.nangpa.dto.user.SignInDto;
 import com.sprint.nangpa.model.User;
+import com.sprint.nangpa.service.TokenService;
 import com.sprint.nangpa.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 /**
  * 사용자 관리 Controller
@@ -18,6 +21,11 @@ public class UserController {
      * 사용자 관리 Service
      */
     private final UserService userService;
+
+    /**
+     * 토큰 발급 Service
+     */
+    private final TokenService tokenService;
 
     /**
      * 이메일 중복 확인
@@ -59,7 +67,7 @@ public class UserController {
      * @return   String    : 엑세스 토큰
      */
     @PostMapping("/signIn")
-    public String signIn(@RequestBody SignInDto signInDto) {
+    public HashMap<String, String> signIn(@RequestBody SignInDto signInDto) {
         return userService.signIn(signInDto);
     }
 }
