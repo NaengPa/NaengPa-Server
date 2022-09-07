@@ -28,13 +28,12 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Claims parseJwtToken(String authorizationHeader) {
+    public Object parseJwtToken(String authorizationHeader) {
         validationAuthorizationHeader(authorizationHeader);
         String token = extractToken(authorizationHeader);
 
         //토큰 검증
-        Claims claims = (Claims) validateToken(token);
-        return claims;
+        return validateToken(token);
     }
 
     /**

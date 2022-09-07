@@ -1,6 +1,5 @@
 package com.sprint.nangpa.config.security.jwt;
 
-import io.jsonwebtoken.Claims;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpHeaders;
@@ -47,7 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             response.setStatus(HttpServletResponse.SC_OK); //option 요청일때 필터검증 안함
         }else { // 진짜 요청일때 필터 검증
             String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-            Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
+            Object claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
 
             request.setAttribute("claims",claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
             filterChain.doFilter(request, response);
