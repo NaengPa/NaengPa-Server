@@ -1,9 +1,6 @@
 package com.sprint.nangpa.config.security.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Header;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -35,10 +32,29 @@ public class JwtTokenProvider {
         validationAuthorizationHeader(authorizationHeader);
         String token = extractToken(authorizationHeader);
 
-        return Jwts.parser()
-                .setSigningKey(jwtProperties.getSecretKey())
-                .parseClaimsJws(token)
-                .getBody();
+        //토큰 검증
+        Claims claims = (Claims) validateToken(token);
+        return claims;
+    }
+
+    /**
+     * 토큰 검증 메서드
+     * @param token
+     * @return
+     */
+    public Object validateToken(String token) {
+        try {
+            return Jwts.parser()
+                    .setSigningKey(jwtProperties.getSecretKey())
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            //토큰이 만료된 경우
+            return "JWT_EXPIRED";
+        } catch (JwtException | IllegalArgumentException exception) {
+            log.info("jwtException : {}",exception);
+        }
+        return null;
     }
 
     private void validationAuthorizationHeader(String header) {
