@@ -18,8 +18,6 @@ public class JwtTokenProvider {
 
     private final JwtProperties jwtProperties;
 
-//    private final
-
     public String makeJwtToken(String email, int minutes) {
         Date now = new Date();
 
@@ -32,7 +30,6 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey())
                 .compact();
     }
-
 
     public Claims parseJwtToken(String authorizationHeader) {
         validationAuthorizationHeader(authorizationHeader);
