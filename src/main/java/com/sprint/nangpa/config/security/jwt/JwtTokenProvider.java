@@ -3,7 +3,9 @@ package com.sprint.nangpa.config.security.jwt;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.Duration;
 import java.util.Date;
@@ -28,19 +30,21 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Object parseJwtToken(String authorizationHeader) {
+    public Claims parseJwtToken(String authorizationHeader) {
         validationAuthorizationHeader(authorizationHeader);
         String token = extractToken(authorizationHeader);
 
         //토큰 검증
-        return validateToken(token);
+        Claims claims = (Claims) validateToken(token);
+        return claims;
     }
 
     /**
      * 토큰 검증 메서드
      * @param token
-     * @return
+     * @return claims
      */
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     public Object validateToken(String token) {
         try {
             return Jwts.parser()
@@ -49,11 +53,11 @@ public class JwtTokenProvider {
                     .getBody();
         } catch (ExpiredJwtException e) {
             //토큰이 만료된 경우
-            return "JWT_EXPIRED";
+            throw e;
         } catch (JwtException | IllegalArgumentException exception) {
             log.info("jwtException : {}",exception);
+            throw exception;
         }
-        return null;
     }
 
     private void validationAuthorizationHeader(String header) {
