@@ -51,7 +51,7 @@ public class JwtTokenProvider {
                     .setSigningKey(jwtProperties.getSecretKey())
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (ExpiredJwtException e) {
+        } catch (ExpiredAccessTokenException e) {
             //토큰이 만료된 경우
             throw e;
         } catch (JwtException | IllegalArgumentException exception) {
