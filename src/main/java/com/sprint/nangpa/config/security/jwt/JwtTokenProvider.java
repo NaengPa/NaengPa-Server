@@ -43,20 +43,7 @@ public class JwtTokenProvider {
      * @return claims
      */
     public Object validateToken(String token) throws ExpiredJwtException {
-//        try {
-//            return Jwts.parser()
-//                    .setSigningKey(jwtProperties.getSecretKey())
-//                    .parseClaimsJws(token)
-//                    .getBody();
-//        } catch (ExpiredJwtException exception) {
-//            log.info("토큰 만료");
-//            throw new ResponseStatusException(
-//                    HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.", exception
-//            );
-//        } catch (JwtException | IllegalArgumentException exception) {
-//            log.info("jwtException : {}", exception);
-//            throw exception;
-//        }
+
         return Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
                 .parseClaimsJws(token)
