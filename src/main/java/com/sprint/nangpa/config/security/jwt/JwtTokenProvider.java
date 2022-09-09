@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.util.Date;
@@ -44,18 +44,19 @@ public class JwtTokenProvider {
      * @param token
      * @return claims
      */
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
     public Object validateToken(String token) {
         try {
             return Jwts.parser()
                     .setSigningKey(jwtProperties.getSecretKey())
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (ExpiredAccessTokenException e) {
-            //토큰이 만료된 경우
-            throw e;
+        } catch (ExpiredJwtException exception) {
+            log.info("토큰 만료");
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.", exception
+            );
         } catch (JwtException | IllegalArgumentException exception) {
-            log.info("jwtException : {}",exception);
+            log.info("jwtException : {}", exception);
             throw exception;
         }
     }
