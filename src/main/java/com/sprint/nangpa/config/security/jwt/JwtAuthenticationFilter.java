@@ -1,13 +1,18 @@
 package com.sprint.nangpa.config.security.jwt;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,9 +23,11 @@ import java.io.IOException;
 
 @Component
 @Getter
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+
 
 
     @Builder
@@ -48,10 +55,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK); //option 요청일때 필터검증 안함
         }else { // 진짜 요청일때 필터 검증
-            String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-            Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
 
-            request.setAttribute("claims",claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
+            String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            try {
+                Claims claims = jwtTokenProvider.parseJwtToken(authorizationHeader);
+                request.setAttribute("claims", claims); // jwt 정보 컨트롤러에서 사용할 수 있게 request에 담기
+
+            } catch (ExpiredJwtException jwtException) {
+                log.info("토큰 만료");
+
+                ObjectMapper mapper = new ObjectMapper();
+
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setCharacterEncoding("UTF-8");
+
+                ResponseStatusException responseStatusException = new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.");
+
+                mapper.writeValue(response.getWriter(), responseStatusException);
+
+            }catch (JwtException | IllegalArgumentException exception) {
+                log.info("jwtException : {}", exception);
+                throw exception;
+            }
+
             filterChain.doFilter(request, response);
         }
     }

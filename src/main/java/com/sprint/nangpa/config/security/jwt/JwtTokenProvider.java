@@ -3,9 +3,7 @@ package com.sprint.nangpa.config.security.jwt;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.util.Date;
@@ -44,21 +42,25 @@ public class JwtTokenProvider {
      * @param token
      * @return claims
      */
-    public Object validateToken(String token) {
-        try {
-            return Jwts.parser()
-                    .setSigningKey(jwtProperties.getSecretKey())
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (ExpiredJwtException exception) {
-            log.info("토큰 만료");
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.", exception
-            );
-        } catch (JwtException | IllegalArgumentException exception) {
-            log.info("jwtException : {}", exception);
-            throw exception;
-        }
+    public Object validateToken(String token) throws ExpiredJwtException {
+//        try {
+//            return Jwts.parser()
+//                    .setSigningKey(jwtProperties.getSecretKey())
+//                    .parseClaimsJws(token)
+//                    .getBody();
+//        } catch (ExpiredJwtException exception) {
+//            log.info("토큰 만료");
+//            throw new ResponseStatusException(
+//                    HttpStatus.UNAUTHORIZED, "토큰이 만료되었습니다.", exception
+//            );
+//        } catch (JwtException | IllegalArgumentException exception) {
+//            log.info("jwtException : {}", exception);
+//            throw exception;
+//        }
+        return Jwts.parser()
+                .setSigningKey(jwtProperties.getSecretKey())
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private void validationAuthorizationHeader(String header) {

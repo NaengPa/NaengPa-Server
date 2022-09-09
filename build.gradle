@@ -38,6 +38,7 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     runtimeOnly 'com.h2database:h2'
     implementation 'org.slf4j:slf4j-api:1.7.31'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
 }
 
 tasks.named('test') {
