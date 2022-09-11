@@ -173,7 +173,7 @@ public class UserService {
      * @return accessToken : 새로 갱신된 엑세스 토큰
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    public HashMap<String, String> refreshAccessToken(String refreshToken) {
+    public HashMap<String, String> refreshLogin(String refreshToken) {
         //리프레쉬 토큰을 받아서 토큰이 만료되었는지, 토큰이 유저 디비에 저장된 토큰과 동일한지 검사 한 후
         Claims claims;
         HashMap<String, String> tokenMap = new HashMap<>();

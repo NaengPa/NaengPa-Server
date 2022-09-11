@@ -71,9 +71,10 @@ public class UserController {
         return userService.signIn(signInDto);
     }
 
-//    @PostMapping("/refreshSignIn")
-//    public HashMap<String, String> refreshSignIn() {
-//
-//    }
+
+    @PostMapping("/refreshSignIn")
+    public HashMap<String, String> refreshSignIn(@RequestBody String refreshToken) {
+        return userService.refreshLogin(refreshToken);
+    }
 
 }
