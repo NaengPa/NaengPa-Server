@@ -152,7 +152,7 @@ public class UserService {
 
         String refreshToken = this.tokenService.issueRefreshToken(signInDto.getEmail());
 
-        String accessToken = this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 1);
+        String accessToken = this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 30);
 
         HashMap<String, String> tokenMap = new HashMap<>();
 
