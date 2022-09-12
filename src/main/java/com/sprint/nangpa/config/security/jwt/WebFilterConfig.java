@@ -16,6 +16,7 @@ public class WebFilterConfig {
         filterRegistrationBean.setFilter(jwtAuthenticationFilter);
 
         filterRegistrationBean.addUrlPatterns("/oauth/login");
+        filterRegistrationBean.addUrlPatterns("/user/refreshSignIn");
         return filterRegistrationBean;
     }
 

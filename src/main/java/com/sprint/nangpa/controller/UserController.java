@@ -4,6 +4,7 @@ import com.sprint.nangpa.dto.user.SignInDto;
 import com.sprint.nangpa.model.User;
 import com.sprint.nangpa.service.TokenService;
 import com.sprint.nangpa.service.UserService;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,10 +72,10 @@ public class UserController {
         return userService.signIn(signInDto);
     }
 
-
-    @PostMapping("/refreshSignIn")
-    public HashMap<String, String> refreshSignIn(@RequestBody String refreshToken) {
-        return userService.refreshLogin(refreshToken);
+    @GetMapping("/refreshSignIn")
+    public HashMap<String, String> refreshSignIn(@RequestAttribute Claims claims, @RequestAttribute String token) {
+        String email = (String) claims.get("email");
+        return userService.refreshLogin(token, email);
     }
 
 }

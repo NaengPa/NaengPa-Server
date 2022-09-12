@@ -7,7 +7,6 @@ import com.sprint.nangpa.mapper.TokenMapper;
 import com.sprint.nangpa.mapper.UserMapper;
 import com.sprint.nangpa.model.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -173,31 +172,20 @@ public class UserService {
      * @return accessToken : 새로 갱신된 엑세스 토큰
      */
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    public HashMap<String, String> refreshLogin(String refreshToken) {
+    public HashMap<String, String> refreshLogin(String refreshToken,String email) {
         //리프레쉬 토큰을 받아서 토큰이 만료되었는지, 토큰이 유저 디비에 저장된 토큰과 동일한지 검사 한 후
-        Claims claims;
         HashMap<String, String> tokenMap = new HashMap<>();
-        try {
-            claims  = (Claims) jwtTokenProvider.validateToken(refreshToken);
-        } catch (ExpiredJwtException expiredJwtException) {
-            throw expiredJwtException;
-        }
-
-        String email = (String)claims.get("email");
 
         RefreshTokenDTO refreshTokenDTO = tokenMapper.selectRefreshToken(email);
 
-        if (refreshTokenDTO.getRefreshToken() == refreshToken) {
-            //토큰이 유효하면 새로운 엑세스 토큰이랑 리프레쉬 토큰을 발급해준다.
-            String issuedRefreshToken = tokenService.issueRefreshToken(email);
-            tokenMap.put("refreshToken", issuedRefreshToken);
+
+        if (refreshTokenDTO.getRefreshToken().equals(refreshToken)) {
+            //토큰이 유효하면 새로운 엑세스 토큰을 발급해준다.
             String accessToken = this.jwtTokenProvider.makeJwtToken(email, 30);
             tokenMap.put("accessToken", accessToken);
         }else{
             throw new UsernameNotFoundException("올바른 리프레쉬 토큰이 아닙니다.");
         }
-
         return tokenMap;
-
     }
 }

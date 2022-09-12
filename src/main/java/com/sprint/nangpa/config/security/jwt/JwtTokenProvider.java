@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.HashMap;
 
 @RequiredArgsConstructor
 @Component
@@ -28,13 +29,19 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Claims parseJwtToken(String authorizationHeader) {
+    public HashMap<String, Object> parseJwtToken(String authorizationHeader) {
         validationAuthorizationHeader(authorizationHeader);
         String token = extractToken(authorizationHeader);
 
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("token", token);
         //토큰 검증
         Claims claims = (Claims) validateToken(token);
-        return claims;
+
+        hashMap.put("claims", claims);
+
+        return hashMap;
     }
 
     /**
