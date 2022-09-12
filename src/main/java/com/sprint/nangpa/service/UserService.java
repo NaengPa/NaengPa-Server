@@ -6,7 +6,6 @@ import com.sprint.nangpa.dto.user.SignInDto;
 import com.sprint.nangpa.mapper.TokenMapper;
 import com.sprint.nangpa.mapper.UserMapper;
 import com.sprint.nangpa.model.User;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -153,7 +152,7 @@ public class UserService {
 
         String refreshToken = this.tokenService.issueRefreshToken(signInDto.getEmail());
 
-        String accessToken = this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 30);
+        String accessToken = this.jwtTokenProvider.makeJwtToken(signInDto.getEmail(), 1);
 
         HashMap<String, String> tokenMap = new HashMap<>();
 
