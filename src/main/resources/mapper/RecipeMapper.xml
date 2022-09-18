@@ -34,7 +34,7 @@
              , PC_NM                -- 가격별 분류
              , (SELECT COUNT(*)
                   FROM RECIPE_LIKE C
-                 WHERE A.ID = C.RECIPE_ID
+                 WHERE A.RECIPE_ID = C.RECIPE_ID
                ) AS LIKE_CNT        -- 좋아요 수
              , IMG_URL              -- 음식 사진 url
              , (SELECT COUNT (DISTINCT (IRDNT_NM))
@@ -60,6 +60,28 @@
                                    )
                )
                AS CONTAIN_CNT
+
+    ]]>
+        <choose>
+            <when test="email != '' and email != null">
+            <![CDATA[
+                 , IFNULL((SELECT 1
+                             FROM RECIPE_LIKE C
+                            WHERE A.RECIPE_ID = C.RECIPE_ID
+                              AND C.EMAIL     = #{email}
+                           )
+                         , 0
+                   )
+             ]]>
+            </when>
+            <otherwise>
+            <![CDATA[
+                 , 0
+             ]]>
+            </otherwise>
+        </choose>
+    <![CDATA[
+               AS LIKE_YN
           FROM RECIPE_INFO A
          WHERE RECIPE_ID IN (   SELECT DISTINCT(RECIPE_ID)
                                   FROM RECIPE_IRDNT

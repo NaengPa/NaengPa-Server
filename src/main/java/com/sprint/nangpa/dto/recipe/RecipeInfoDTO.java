@@ -98,6 +98,11 @@ public class RecipeInfoDTO implements Serializable {
     private long containCnt;
 
     /**
+     * 사용자 좋아요 여부
+     */
+    private boolean likeYn;
+
+    /**
      * 재료 목록
      */
     private List<IrdntInfoDTO> irdnts;

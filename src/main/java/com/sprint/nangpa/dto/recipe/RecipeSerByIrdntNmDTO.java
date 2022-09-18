@@ -21,4 +21,9 @@ public class RecipeSerByIrdntNmDTO {
      * 재료 목록
      */
     private List<String> irdntNms;
+
+    /**
+     * 사용자 이메일
+     */
+    private String email;
 }

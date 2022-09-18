@@ -21,10 +21,10 @@ public interface RecipeMapper {
     /**
      * 재료 목록이 포함된 레시피 목록 조회
      *
-     * @param  irdntNms                : 선택한 재료 목록
+     * @param  recipeSerData           : 조회 정보
      * @return List<RecipeListInfoDTO> : 레시피 목록
      */
-    List<RecipeInfoDTO> selectRecipeListContainIrdntNm(@Param("irdntNms") List<String> irdntNms);
+    List<RecipeInfoDTO> selectRecipeListContainIrdntNm(RecipeSerByIrdntNmDTO recipeSerData);
 
     /**
      * 레시피 정보 조회

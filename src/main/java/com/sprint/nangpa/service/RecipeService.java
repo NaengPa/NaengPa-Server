@@ -35,10 +35,10 @@ public class RecipeService {
     /**
      * 검색 재료가 포함된 음식 레시피 조회
      *
-     * @param   irdntNms      : 검색 재료 목록
+     * @param   recipeSerData : 조회 정보
      * @return  RecipeListDTO : 재료가 포함된 레시피 목록
      */
-    public RecipeListDTO getRecipeListByContainIrdntNm(List<String> irdntNms){
+    public RecipeListDTO getRecipeListByContainIrdntNm(RecipeSerByIrdntNmDTO recipeSerData){
         RecipeListDTO res = new RecipeListDTO();
 
         // 필터 정보 조회
@@ -49,7 +49,7 @@ public class RecipeService {
         res.setFilterInfo(filterInfo);
 
         // 레시피 목록 조회
-        List<RecipeInfoDTO> recipeInfos = recipeMapper.selectRecipeListContainIrdntNm(irdntNms);
+        List<RecipeInfoDTO> recipeInfos = recipeMapper.selectRecipeListContainIrdntNm(recipeSerData);
 
         // 레시피 별 재료 목록 조회
         for (RecipeInfoDTO recipeInfo : recipeInfos) {

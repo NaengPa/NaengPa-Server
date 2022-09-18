@@ -33,12 +33,12 @@ public class RecipeController {
     /**
      * 검색 재료가 포함된 음식 레시피 조회
      *
-     * @param irdntNms       : 재료 목록
+     * @param  recipeSerData : 조회 정보
      * @return RecipeListDTO : 재료가 포함된 레시피 목록
      */
     @PostMapping("/getRecipeList")
-    public RecipeListDTO getRecipeList(@RequestBody RecipeSerByIrdntNmDTO irdntNms){
-        return recipeService.getRecipeListByContainIrdntNm(irdntNms.getIrdntNms());
+    public RecipeListDTO getRecipeList(@RequestBody RecipeSerByIrdntNmDTO recipeSerData){
+        return recipeService.getRecipeListByContainIrdntNm(recipeSerData);
     }
 
     /**
