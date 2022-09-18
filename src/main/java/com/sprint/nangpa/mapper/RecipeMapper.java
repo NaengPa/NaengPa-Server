@@ -72,4 +72,35 @@ public interface RecipeMapper {
      */
     List<String> selectLevelNm();
 
+    /**
+     * 레시피 좋아요 조회
+     *
+     * @param  recipeId : 레시피 식별 값
+     * @return int      : 좋아요 수
+     */
+    int selectRecipeLikeCnt(long recipeId);
+
+    /**
+     * 좋아요 여부 조회
+     *
+     * @param recipeLikeDTO : 레시피 좋아요 정보
+     * @return int          : 조회 레시 좋아요 수
+     */
+    int selectRecipeLike(RecipeLikeDTO recipeLikeDTO);
+
+    /**
+     * 레시피 좋아요 추가
+     *
+     * @param  recipeLikeDTO : 레시피 좋아요 정보
+     * @return int           : 저장 결과
+     */
+    int insertRecipeLike(RecipeLikeDTO recipeLikeDTO);
+
+    /**
+     * 레시피 좋아요 삭제
+     *
+     * @param  recipeLikeDTO : 레시피 좋아요 정보
+     * @return int           : 삭제 결과
+     */
+    int deleteRecipeLike(RecipeLikeDTO recipeLikeDTO);
 }

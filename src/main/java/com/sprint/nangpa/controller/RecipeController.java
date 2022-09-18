@@ -62,4 +62,15 @@ public class RecipeController {
     public List<CurRecipeDTO> getCurRecipeList(@RequestBody RecipeSerByRecipeIdDTO recipeIds) {
         return recipeService.getRecipeListByContainRecipeId(recipeIds.getRecipeIds());
     }
+
+    /**
+     * 게시글 좋아요 추가/삭제
+     *
+     * @param  recipeLikeDTO : 레시피 좋아요 정보
+     * @return int           : 해당 레시피 좋아요 수
+     */
+    @PostMapping("/like")
+    public int changeBoardLike(@RequestBody RecipeLikeDTO recipeLikeDTO){
+        return recipeService.changeRecipeLike(recipeLikeDTO);
+    }
 }

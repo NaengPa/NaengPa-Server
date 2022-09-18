@@ -94,4 +94,30 @@ public class RecipeService {
     public List<CurRecipeDTO> getRecipeListByContainRecipeId(List<Long> recipeIds) {
         return recipeMapper.selectRecipeListContainRecipeId(recipeIds);
     }
+
+    /**
+     * 레시피 좋아요 추가/삭제
+     *
+     * @param  recipeLikeDTO : 레시피 좋아요 정보
+     * @return int           : 레시피 좋아요 수
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public int changeRecipeLike(RecipeLikeDTO recipeLikeDTO) {
+
+        // 저장된 좋아요 조회
+        int cnt = recipeMapper.selectRecipeLike(recipeLikeDTO);
+
+        int res;
+        if(cnt == 0){       // 저장된 좋아요가 없으면 추가
+            res = recipeMapper.insertRecipeLike(recipeLikeDTO);
+        }else{
+            res = recipeMapper.deleteRecipeLike(recipeLikeDTO);
+        }
+
+        if(res < 1){
+            throw new RuntimeException("좋아요 실패!!");
+        }
+
+        return recipeMapper.selectRecipeLikeCnt(recipeLikeDTO.getRecipeId());
+    }
 }

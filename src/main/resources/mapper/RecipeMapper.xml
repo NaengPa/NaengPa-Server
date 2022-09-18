@@ -32,7 +32,10 @@
              , LEVEL_NM             -- 난이도
              , IRDNT_CD             -- 재료별 분류명
              , PC_NM                -- 가격별 분류
-             , LIKE_CNT             -- 좋아요 수
+             , (SELECT COUNT(*)
+                  FROM RECIPE_LIKE C
+                 WHERE A.ID = C.RECIPE_ID
+               ) AS LIKE_CNT        -- 좋아요 수
              , IMG_URL              -- 음식 사진 url
              , (SELECT COUNT (DISTINCT (IRDNT_NM))
                   FROM RECIPE_IRDNT B
@@ -174,4 +177,47 @@
           FROM RECIPE_INFO
     ]]>
     </select>
+
+    <!-- 레시피 좋아요 여부 조회 -->
+    <select id="selectRecipeLike" parameterType="com.sprint.nangpa.dto.recipe.RecipeLikeDTO" resultType="int">
+    <![CDATA[
+        SELECT COUNT(*)
+          FROM RECIPE_LIKE
+         WHERE RECIPE_ID = #{recipeId}
+           AND EMAIL     = #{email}
+    ]]>
+    </select>
+
+    <!-- 레시피 좋아요 수 조회 -->
+    <select id="selectRecipeLikeCnt" parameterType="long" resultType="int">
+    <![CDATA[
+        SELECT COUNT(*)
+          FROM RECIPE_LIKE
+         WHERE RECIPE_ID = #{recipeId}
+    ]]>
+    </select>
+
+    <!-- 레시피 좋아요 추가 -->
+    <insert id="insertRecipeLike" parameterType="com.sprint.nangpa.dto.recipe.RecipeLikeDTO">
+    <![CDATA[
+        INSERT
+          INTO RECIPE_LIKE
+               ( EMAIL
+               , RECIPE_ID
+               )
+        VALUES ( #{email}
+               , #{recipeId}
+               )
+    ]]>
+    </insert>
+
+    <!-- 레시피 좋아요 삭제 -->
+    <delete id="deleteRecipeLike" parameterType="com.sprint.nangpa.dto.recipe.RecipeLikeDTO">
+    <![CDATA[
+        DELETE
+          FROM RECIPE_LIKE
+         WHERE EMAIL     = #{email}
+           AND RECIPE_ID = #{recipeId}
+    ]]>
+    </delete>
 </mapper>
