@@ -120,7 +120,10 @@
              , LEVEL_NM             -- 난이도
              , IRDNT_CD             -- 재료별 분류명
              , PC_NM                -- 가격별 분류
-             , LIKE_CNT             -- 좋아요 수
+             , (SELECT COUNT(*)
+                  FROM RECIPE_LIKE
+                 WHERE RECIPE_ID = #{recipeId})
+               AS LIKE_CNT          -- 좋아요 수
              , IMG_URL              -- 음식 사진 url
     ]]>
         <choose>
