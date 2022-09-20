@@ -3,6 +3,7 @@ package com.sprint.nangpa.service;
 import com.sprint.nangpa.dto.recipe.CurRecipeDTO;
 import com.sprint.nangpa.dto.recipe.IrdntNmDTO;
 import com.sprint.nangpa.dto.recipe.RecipeDetailDTO;
+import com.sprint.nangpa.dto.recipe.RecipeUserKeyDTO;
 import com.sprint.nangpa.mapper.RecipeMapper;
 import com.sprint.nangpa.model.RecipeInfo;
 import org.junit.jupiter.api.Test;
@@ -37,9 +38,9 @@ public class RecipeServiceTest {
         assertThat(findData.size()).isEqualTo(217);
     }
 
-    /**
-     * 검색 재료가 포함된 음식 레시피 조회
-     */
+//    /**
+//     * 검색 재료가 포함된 음식 레시피 조회
+//     */
 //    @Test
 //    public void givenStringList_whengetRecipeListByContainIrdntNm_thenRecipeListInfoListSuccess()  {
 //        List<String> irdntNms = new ArrayList<>();
@@ -58,9 +59,11 @@ public class RecipeServiceTest {
      */
     @Test
     public void givenRecipeId_whenGetRecipeDetail_thenRecipeDetailInfoSuccess()  {
-        long recipeId = 1;
+        RecipeUserKeyDTO data = new RecipeUserKeyDTO();
+        data.setRecipeId(1);
+        data.setEmail("test123@gmail.com");
 
-        RecipeDetailDTO findData = recipeService.getRecipeDetail(recipeId);
+        RecipeDetailDTO findData = recipeService.getRecipeDetail(data);
 
         assertThat(findData.getRecipeInfo().getRecipeId()).isEqualTo(1);
         assertThat(findData.getRecipeCrses().size()).isEqualTo(5);

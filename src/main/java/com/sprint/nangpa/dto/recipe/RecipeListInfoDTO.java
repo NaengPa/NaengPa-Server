@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-public class RecipeInfoDTO implements Serializable {
+public class RecipeListInfoDTO implements Serializable {
 
     /**
      * 레시피 코드
@@ -85,7 +85,7 @@ public class RecipeInfoDTO implements Serializable {
     /**
      * 좋아요 수
      */
-    private String likeCnt;
+    private long likeCnt;
 
     /**
      * 음식 사진 url
@@ -93,7 +93,17 @@ public class RecipeInfoDTO implements Serializable {
     private String imgUrl;
 
     /**
+     * 검색 재료목록이 포함된 수
+     */
+    private long containCnt;
+
+    /**
      * 사용자 좋아요 여부
      */
     private boolean likeYn;
+
+    /**
+     * 재료 목록
+     */
+    private List<IrdntInfoDTO> irdnts;
 }

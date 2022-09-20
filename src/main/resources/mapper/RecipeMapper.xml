@@ -17,7 +17,7 @@
     </select>
 
     <!-- 재료 목록에 속한 레시피 목록 조회 -->
-    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.recipe.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.dto.recipe.RecipeInfoDTO">
+    <select id="selectRecipeListContainIrdntNm" parameterType="com.sprint.nangpa.dto.recipe.RecipeSerByIrdntNmDTO" resultType="com.sprint.nangpa.dto.recipe.RecipeListInfoDTO">
     <![CDATA[
         SELECT RECIPE_ID            -- 레시피 코드
              , RECIPE_NM_KO         -- 레시피 이름(한글)
@@ -104,6 +104,50 @@
     ]]>
     </select>
 
+    <!-- 레시피 기본정보 조회 -->
+    <select id="selectRecipeInfo" parameterType="com.sprint.nangpa.dto.recipe.RecipeUserKeyDTO" resultType="com.sprint.nangpa.dto.recipe.RecipeInfoDTO">
+    <![CDATA[
+        SELECT RECIPE_ID            -- 레시피 코드
+             , RECIPE_NM_KO         -- 레시피 이름(한글)
+             , SUMMARY              -- 간략(요약) 소개
+             , NATION_CD            -- 유형코드
+             , NATION_NM            -- 유형분류
+             , TYPE_CD              -- 음식분류코드
+             , TYPE_NM              -- 음식분류
+             , COOKING_TIME         -- 조리시간
+             , CALORIE              -- 칼로리
+             , QNT                  -- 분량
+             , LEVEL_NM             -- 난이도
+             , IRDNT_CD             -- 재료별 분류명
+             , PC_NM                -- 가격별 분류
+             , LIKE_CNT             -- 좋아요 수
+             , IMG_URL              -- 음식 사진 url
+    ]]>
+        <choose>
+            <when test="email != '' and email != null">
+            <![CDATA[
+                 , IFNULL((SELECT 1
+                             FROM RECIPE_LIKE B
+                            WHERE A.RECIPE_ID = B.RECIPE_ID
+                              AND B.EMAIL     = #{email}
+                           )
+                         , 0
+                   )
+             ]]>
+            </when>
+            <otherwise>
+                <![CDATA[
+                 , 0
+             ]]>
+            </otherwise>
+        </choose>
+    <![CDATA[
+               AS LIKE_YN           -- 좋아요 여부
+          FROM RECIPE_INFO  A
+         WHERE RECIPE_ID = #{recipeId}
+    ]]>
+    </select>
+
     <!-- 레시피 코드를 통한 레시피 기본정보 조회 -->
     <select id="selectRecipeInfoByRecipeId" parameterType="Long" resultType="com.sprint.nangpa.model.RecipeInfo">
     <![CDATA[
@@ -151,6 +195,7 @@
         GROUP BY
             RECIPE_ID
           , IRDNT_NM
+          , IRDNT_SN
         ORDER BY
             IRDNT_SN
     ]]>

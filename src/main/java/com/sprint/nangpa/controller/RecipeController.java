@@ -44,12 +44,12 @@ public class RecipeController {
     /**
      * 레시피 상세보기 페이지 정보 조회
      *
-     * @param   recipeId        : 조회 레시피 아이디
+     * @param   recipeUserKey   : 레시피 조회 정보
      * @return  RecipeDetailDTO : 레시피 정보
      */
-    @GetMapping("/getRecipeDetail/{id}")
-    public RecipeDetailDTO getRecipeDetail(@PathVariable(value = "id") long recipeId) {
-        return recipeService.getRecipeDetail(recipeId);
+    @GetMapping("/getRecipeDetail")
+    public RecipeDetailDTO getRecipeDetail(@ModelAttribute RecipeUserKeyDTO recipeUserKey) {
+        return recipeService.getRecipeDetail(recipeUserKey);
     }
 
     /**

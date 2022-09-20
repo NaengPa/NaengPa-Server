@@ -1,7 +1,6 @@
 package com.sprint.nangpa.dto.recipe;
 
 import com.sprint.nangpa.model.RecipeCrse;
-import com.sprint.nangpa.model.RecipeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,7 @@ public class RecipeDetailDTO implements Serializable {
     /**
      * 레시피 기본정보
      */
-    private RecipeInfo recipeInfo;
+    private RecipeInfoDTO recipeInfo;
 
     /**
      * 레시피 과정정보

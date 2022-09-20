@@ -3,7 +3,6 @@ package com.sprint.nangpa.service;
 import com.sprint.nangpa.dto.recipe.*;
 import com.sprint.nangpa.mapper.RecipeMapper;
 import com.sprint.nangpa.model.RecipeCrse;
-import com.sprint.nangpa.model.RecipeInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,10 +48,10 @@ public class RecipeService {
         res.setFilterInfo(filterInfo);
 
         // 레시피 목록 조회
-        List<RecipeInfoDTO> recipeInfos = recipeMapper.selectRecipeListContainIrdntNm(recipeSerData);
+        List<RecipeListInfoDTO> recipeInfos = recipeMapper.selectRecipeListContainIrdntNm(recipeSerData);
 
         // 레시피 별 재료 목록 조회
-        for (RecipeInfoDTO recipeInfo : recipeInfos) {
+        for (RecipeListInfoDTO recipeInfo : recipeInfos) {
             recipeInfo.setIrdnts(recipeMapper.selectRecipeIrdntByRecipeId(recipeInfo.getRecipeId()));
         }
 
@@ -64,22 +63,22 @@ public class RecipeService {
     /**
      * 레시피 상세정보 조회
      *
-     * @param   recipeId        : 레시피 아이디
+     * @param   recipeUserKey   : 레시피 조회 정보
      * @return  RecipeDetailDTO : 레시피(기본정보, 과정정보, 재료정보)
      */
-    public RecipeDetailDTO getRecipeDetail(long recipeId) {
+    public RecipeDetailDTO getRecipeDetail(RecipeUserKeyDTO recipeUserKey) {
         RecipeDetailDTO recipeDetailDTO = new RecipeDetailDTO();
 
         // 레시피 기본정보 세팅
-        RecipeInfo recipeInfo = recipeMapper.selectRecipeInfoByRecipeId(recipeId);
+        RecipeInfoDTO recipeInfo = recipeMapper.selectRecipeInfo(recipeUserKey);
         recipeDetailDTO.setRecipeInfo(recipeInfo);
 
         // 레시피 과정정보 세팅
-        List<RecipeCrse> findRecipeCrses = recipeMapper.selectRecipeCrseByRecipeId(recipeId);
+        List<RecipeCrse> findRecipeCrses = recipeMapper.selectRecipeCrseByRecipeId(recipeUserKey.getRecipeId());
         recipeDetailDTO.setRecipeCrses(findRecipeCrses);
 
         // 레시피 재료정보 세팅
-        List<IrdntInfoDTO> findRecipeIrdnts = recipeMapper.selectRecipeIrdntByRecipeId(recipeId);
+        List<IrdntInfoDTO> findRecipeIrdnts = recipeMapper.selectRecipeIrdntByRecipeId(recipeUserKey.getRecipeId());
         recipeDetailDTO.setRecipeIrdnts(findRecipeIrdnts);
 
         return recipeDetailDTO;

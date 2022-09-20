@@ -24,12 +24,20 @@ public interface RecipeMapper {
      * @param  recipeSerData           : 조회 정보
      * @return List<RecipeListInfoDTO> : 레시피 목록
      */
-    List<RecipeInfoDTO> selectRecipeListContainIrdntNm(RecipeSerByIrdntNmDTO recipeSerData);
+    List<RecipeListInfoDTO> selectRecipeListContainIrdntNm(RecipeSerByIrdntNmDTO recipeSerData);
 
     /**
      * 레시피 정보 조회
      *
-     * @param  recipeId   : 레시피 코드
+     * @param  recipeUserKey : 레시피 조회 정보
+     * @return RecipeInfoDTO : 레시피 정보
+     */
+    RecipeInfoDTO selectRecipeInfo(RecipeUserKeyDTO recipeUserKey);
+
+    /**
+     * 레시피 정보 조회
+     *
+     * @param  recipeId   : 레시피 식별 값
      * @return RecipeInfo : 레시피 정보
      */
     RecipeInfo selectRecipeInfoByRecipeId(long recipeId);

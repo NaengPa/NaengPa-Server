@@ -24,5 +24,5 @@ public class RecipeListDTO {
     /**
      * 레시피 목록 정보
      */
-    private List<RecipeInfoDTO> recipeInfos;
+    private List<RecipeListInfoDTO> recipeInfos;
 }
