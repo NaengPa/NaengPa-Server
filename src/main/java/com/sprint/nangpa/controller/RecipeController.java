@@ -64,13 +64,13 @@ public class RecipeController {
     }
 
     /**
-     * 게시글 좋아요 추가/삭제
+     * 레시피 좋아요 추가/삭제
      *
      * @param  recipeLikeDTO : 레시피 좋아요 정보
      * @return int           : 해당 레시피 좋아요 수
      */
     @PostMapping("/like")
-    public int changeBoardLike(@RequestBody RecipeLikeDTO recipeLikeDTO){
+    public int changeRecipeLike(@RequestBody RecipeLikeDTO recipeLikeDTO){
         return recipeService.changeRecipeLike(recipeLikeDTO);
     }
 }

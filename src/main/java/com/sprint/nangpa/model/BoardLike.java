@@ -15,11 +15,6 @@ import lombok.ToString;
 public class BoardLike {
 
     /**
-     * 게시글 좋아요 식별 값
-     */
-    private long id;
-
-    /**
      * 작성자
      */
     private String email;
