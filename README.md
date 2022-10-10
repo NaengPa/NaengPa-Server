@@ -1,13 +1,17 @@
-# 냉파
+<div align="center"><h1> 냉장고 파먹기:snowflake: </div>
+<br>
 
-서비스 설명
-
+<a href="http://naengpa.netlify.app"> ![KakaoTalk_Photo_2022-07-25-21-56-38](https://user-images.githubusercontent.com/109858852/180783180-41ff451c-a898-4781-b9ec-a8631d397c8a.png)</a>
+오래된 재료는 비우고 행복은 채우는 **냉장고 파먹기**:snowflake:
 
 <br>
 
-## :sweat_smile: 프로젝트 목표
+## :heart_eyes: 프로젝트 소개
 
--
+- 테오의 스프린트 10기에서 시작되었어요.
+- 냉장고 재료로 할 수 있는 요리를 찾고, 요리를 주제로 사람들과 소통할 수 있는 서비스입니다 🍳
+
+
 
 <br>
 
