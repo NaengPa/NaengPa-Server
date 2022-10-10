@@ -29,10 +29,11 @@
 
 ## :mag: DB Model
 
-![스크린샷 2022-07-25 오후 7 32 24](
-https://user-images.githubusercontent.com/50781066/180759625-2c3a84c4-0c20-42b2-b6ca-a73a7e63b034.png
-)
+
+<img width="1238" alt="스크린샷 2022-10-10 오후 3 18 56" src="https://user-images.githubusercontent.com/67010993/194808012-a1366774-3bb1-4317-854d-2fb271f4616f.png">
+
 <br>
+
 ## :monocle_face: 서비스 구성도
 
 ![스크린샷 2022-07-25 오후 8 03 55](
@@ -49,7 +50,7 @@ https://user-images.githubusercontent.com/50781066/180764659-b5d83b62-3715-4b39-
 
 ## :calendar: 프로젝트 기간
 
--   22.07.22 ~ 22.07.26
+-  2022.07.22 ~ 2022.09.23
 
 <br>
 
