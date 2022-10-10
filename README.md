@@ -19,11 +19,10 @@
 
 - Spring Boot
 - Gradle
-- Spring Data Jpa
+- Mybatis
 - MariaDB
 
 - Heroku
-- Aws S3
 
 <br>
 
